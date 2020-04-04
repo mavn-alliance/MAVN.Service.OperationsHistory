@@ -22,7 +22,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.BonusCashInEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BonusCashInEntity", b =>
                 {
                     b.Property<string>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -66,7 +66,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("bonus_cash_in");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", b =>
                 {
                     b.Property<string>("BurnRuleId")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("burn_rules");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", b =>
                 {
                     b.Property<string>("CampaignId")
                         .ValueGeneratedOnAdd();
@@ -94,7 +94,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("campaigns");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.CustomerTierEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CustomerTierEntity", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("tiers_updates");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentEntity", b =>
                 {
                     b.Property<string>("PaymentRequestId")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("partners_payments");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentRefundEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentRefundEntity", b =>
                 {
                     b.Property<string>("PaymentRequestId")
                         .ValueGeneratedOnAdd()
@@ -182,7 +182,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("refunded_partners_payments");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferEntity", b =>
                 {
                     b.Property<string>("TransferId")
                         .ValueGeneratedOnAdd()
@@ -221,7 +221,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("payment_transfers");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferRefundEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferRefundEntity", b =>
                 {
                     b.Property<string>("TransferId")
                         .ValueGeneratedOnAdd()
@@ -260,7 +260,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("refunded_payment_transfers");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.TransactionHistoryEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.TransactionHistoryEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -297,7 +297,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("transaction_history");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.TransferEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.TransferEntity", b =>
                 {
                     b.Property<string>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -341,24 +341,24 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.ToTable("transfer");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.BonusCashInEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BonusCashInEntity", b =>
                 {
-                    b.HasOne("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
+                    b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId");
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferEntity", b =>
                 {
-                    b.HasOne("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", "BurnRule")
+                    b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", "BurnRule")
                         .WithMany()
                         .HasForeignKey("BurnRuleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferRefundEntity", b =>
+            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PaymentTransferRefundEntity", b =>
                 {
-                    b.HasOne("Lykke.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", "BurnRule")
+                    b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", "BurnRule")
                         .WithMany()
                         .HasForeignKey("BurnRuleId")
                         .OnDelete(DeleteBehavior.Cascade);
