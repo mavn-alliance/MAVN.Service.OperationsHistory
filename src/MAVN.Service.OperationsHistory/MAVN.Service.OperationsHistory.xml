@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MAVN.Service.OperationsHistory</name>
+    </assembly>
+    <members>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetByCustomerIdAsync(System.String,MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModel)">
+            <summary>
+            Gets paged transactions history by customer id
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedCustomerOperationsResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetByDateAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged transactions history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedTransactionHistoryResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetBonusesByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged bonuses history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedBonusesHistoryResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetPaymentTransfersByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged payment tarnsfers history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedPaymentTransfersHistoryResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetPartnersPaymentsByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged partners payments history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedPartnersPaymentsHistoryResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetVoucherPurchasePaymentsByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged voucher purchase payments history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedPartnersPaymentsHistoryResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetBonusCashInsAsync(System.String,System.String)">
+            <summary>
+            Gets bonus cash ins transfers for customer per campaign
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.BonusCashInResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetBonusCashInsByReferralAsync(System.String,System.String)">
+            <summary>
+            Gets bonus cash ins transfers for customer per referral
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.BonusCashInResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.StatisticsController.GetActiveCustomersCountAsync(System.DateTime,System.DateTime)">
+            <summary>
+            Gets the count of active customers between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.ActiveCustomersCountResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.StatisticsController.GetTokensStatisticsAsync(System.DateTime,System.DateTime)">
+            <summary>
+            Gets statistics for tokens in the system
+            </summary>
+            <param name="dateFrom">The inclusive start date for fetching data</param>
+            <param name="dateTo">The exclusive end date for fetching data</param>
+            <returns></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.StatisticsController.GetCustomerStatisticsAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PeriodRequest)">
+            <summary>
+            Get a customers statistics model
+            </summary>
+            <param name="periodRequest"><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Requests.PeriodRequest"/></param>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.CustomersStatisticListResponse"/></returns>
+        </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.StatisticsController.GetTokensStatisticsForCustomerAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.TokensStatisticsForCustomerRequest)">
+            <summary>
+            Gets statistics for tokens for a customer in the system
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

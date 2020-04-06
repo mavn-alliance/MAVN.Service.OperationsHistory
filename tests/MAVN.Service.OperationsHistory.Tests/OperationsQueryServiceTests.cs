@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lykke.Logs;
 using Lykke.Service.CustomerProfile.Client;
+using Lykke.Service.CustomerProfile.Client.Models.Responses;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.DomainServices.Services;
@@ -50,19 +51,19 @@ namespace MAVN.Service.OperationsHistory.Tests
                 });
 
             var customerIds = new [] {FakeSenderCustomerId, FakeReceiverCustomerId, FakeReceiver2CustomerId};
-            var customerProfiles = new List<CustomerProfile.Client.Models.Responses.CustomerProfile>
+            var customerProfiles = new List<CustomerProfile>
             {
-                new CustomerProfile.Client.Models.Responses.CustomerProfile
+                new CustomerProfile
                 {
                     CustomerId = FakeSenderCustomerId,
                     Email = FakeSenderCustomerEmail
                 },
-                new CustomerProfile.Client.Models.Responses.CustomerProfile
+                new CustomerProfile
                 {
                     CustomerId = FakeReceiverCustomerId,
                     Email = FakeReceiverCustomerEmail
                 },
-                new CustomerProfile.Client.Models.Responses.CustomerProfile
+                new CustomerProfile
                 {
                     CustomerId = FakeReceiver2CustomerId,
                     Email = FakeReceiver2CustomerEmail
