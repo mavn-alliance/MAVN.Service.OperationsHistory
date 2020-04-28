@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using MAVN.Service.OperationsHistory.Domain.Models;
 
 namespace MAVN.Service.OperationsHistory.Domain.Services
@@ -32,5 +32,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
         Task ProcessWalletLinkingStateChangeCompletedEventAsync(LinkWalletOperationDto linkWalletOperation);
 
         Task ProcessVoucherTokensUsedEventAsync(VoucherPurchasePaymentDto voucherPurchasePaymentOperation);
+
+        Task ProcessSmartVoucherPaymentCompletedEventAsync(SmartVoucherPaymentDto smartVoucherPayment);
     }
 }

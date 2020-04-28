@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MAVN.Service.OperationsHistory.Domain.Models;
@@ -174,6 +174,18 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
                 Type = OperationType.VoucherPurchasePayment.ToString(),
                 AssetSymbol = operation.AssetSymbol,
                 TransactionId = operation.TransferId.ToString()
+            };
+        }
+
+        public static TransactionHistoryEntity CreateForSmartVoucherPayment(ISmartVoucherPayment operation)
+        {
+            return new TransactionHistoryEntity
+            {
+                CustomerId = operation.CustomerId.ToString(),
+                Timestamp = operation.Timestamp,
+                AssetSymbol = operation.AssetSymbol,
+                TransactionId = operation.PaymentRequestId,
+                Type = OperationType.SmartVoucherPayment.ToString(),
             };
         }
     }

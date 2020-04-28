@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
@@ -32,6 +32,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IFeeCollectedOperationsRepository _feeCollectedOperationsRepository;
         private readonly ILinkWalletOperationsRepository _linkWalletOperationsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
+        private readonly ISmartVoucherPaymentsRepository _smartVoucherPaymentsRepository;
         private readonly string _tokenSymbol;
         private readonly ILog _log;
 
@@ -50,6 +51,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IFeeCollectedOperationsRepository feeCollectedOperationsRepository,
             ILinkWalletOperationsRepository linkWalletOperationsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
+            ISmartVoucherPaymentsRepository smartVoucherPaymentsRepository,
             string tokenSymbol,
             ILogFactory logFactory)
         {
@@ -68,6 +70,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _feeCollectedOperationsRepository = feeCollectedOperationsRepository;
             _linkWalletOperationsRepository = linkWalletOperationsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
+            _smartVoucherPaymentsRepository = smartVoucherPaymentsRepository;
             _customerWalletsCache = new OnDemandDataCache<string>(memoryCache);
             _log = logFactory.CreateLog(this);
         }
@@ -260,6 +263,16 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             voucherPurchasePaymentOperation.AssetSymbol = _tokenSymbol;
 
             return _voucherPurchasePaymentsRepository.InsertAsync(voucherPurchasePaymentOperation);
+        }
+
+        public async Task ProcessSmartVoucherPaymentCompletedEventAsync(SmartVoucherPaymentDto smartVoucherPayment)
+        {
+            var isValid = ValidateSmartVoucherPaymentOperation(smartVoucherPayment);
+
+            if (!isValid)
+                return;
+
+            await _smartVoucherPaymentsRepository.AddAsync(smartVoucherPayment);
         }
 
         private async Task AddAdditionalDataToReferralStake(ReferralStakeDto referralStake)
@@ -631,6 +644,43 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             {
                 isValid = false;
                 _log.Warning("Link wallet operation without operationId", context: linkWalletOperation);
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateSmartVoucherPaymentOperation(SmartVoucherPaymentDto smartVoucherPayment)
+        {
+            bool isValid = true;
+
+            if (smartVoucherPayment.Amount < 0)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment with negative fee amount", context: smartVoucherPayment);
+            }
+
+            if (smartVoucherPayment.CustomerId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without customer id", context: smartVoucherPayment);
+            }
+
+            if (string.IsNullOrEmpty(smartVoucherPayment.PaymentRequestId))
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without payment request id", context: smartVoucherPayment);
+            }
+
+            if (smartVoucherPayment.PartnerId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without partner id", context: smartVoucherPayment);
+            }
+
+            if (string.IsNullOrEmpty(smartVoucherPayment.AssetSymbol))
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without asset symbol", context: smartVoucherPayment);
             }
 
             return isValid;

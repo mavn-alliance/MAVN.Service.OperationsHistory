@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using JetBrains.Annotations;
 using Lykke.Common;
 using MAVN.Service.OperationsHistory.DomainServices.Subscribers;
@@ -26,6 +26,7 @@ namespace MAVN.Service.OperationsHistory.Modules
         private const string ReferralStakeReleasedExchange = "lykke.wallet.referralstakereleased";
         private const string FeeCollectedExchangeName = "lykke.wallet.feecollected";
         private const string VoucherTokensUsedExchangeName = "lykke.wallet.vouchertokensused";
+        private const string SmartVoucherPaymentExchangeName = "lykke.payment.completed";
 
         private readonly string _connString;
         private readonly bool _isPublicBlockchainFeatureDisabled;
@@ -114,6 +115,13 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .As<IStartStop>()
                 .WithParameter("connectionString", _connString)
                 .WithParameter("exchangeName", VoucherTokensUsedExchangeName)
+                .WithParameter("queueName", DefaultQueueName)
+                .SingleInstance();
+
+            builder.RegisterType<SmartVoucherPaymentCompletedSubscriber>()
+                .As<IStartStop>()
+                .WithParameter("connectionString", _connString)
+                .WithParameter("exchangeName", SmartVoucherPaymentExchangeName)
                 .WithParameter("queueName", DefaultQueueName)
                 .SingleInstance();
 

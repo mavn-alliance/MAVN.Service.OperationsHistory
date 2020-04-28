@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MAVN.Service.OperationsHistory.Client.Models.Responses
 {
@@ -61,5 +61,10 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// List of voucher purchase payments.
         /// </summary>
         public IEnumerable<VoucherPurchasePaymentResponse> VoucherPurchasePayments { get; set; }
+
+        /// <summary>
+        /// List of smart voucher payments.
+        /// </summary>
+        public IEnumerable<SmartVoucherPaymentResponse> SmartVoucherPayments { get; set; }
     }
 }

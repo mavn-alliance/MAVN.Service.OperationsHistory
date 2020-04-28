@@ -1,4 +1,4 @@
-using System.Data.Common;
+﻿using System.Data.Common;
 using Lykke.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
@@ -27,6 +27,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
         internal DbSet<FeeCollectedOperationEntity> FeeCollectedOperations { get; set; }
         internal DbSet<LinkWalletOperationEntity> LinkWalletOperations { get; set; }
         internal DbSet<VoucherPurchasePaymentEntity> VoucherPurchasePayments { get; set; }
+        internal DbSet<SmartVoucherPaymentEntity> SmartVoucherPayments { get; set; }
 
         public OperationsHistoryContext() : base(Schema)
         {
@@ -109,6 +110,11 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
 
             voucherPurchasePaymentBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
             voucherPurchasePaymentBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
+
+            var smartVoucherPaymentBuilder = modelBuilder.Entity<SmartVoucherPaymentEntity>();
+
+            smartVoucherPaymentBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
+            smartVoucherPaymentBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
         }
     }
 }

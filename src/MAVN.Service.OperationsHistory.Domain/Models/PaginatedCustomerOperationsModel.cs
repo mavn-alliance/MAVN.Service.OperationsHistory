@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MAVN.Service.OperationsHistory.Domain.Models
 {
@@ -25,5 +25,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
         public IEnumerable<FeeCollectedOperationDto> FeeCollectedOperations { get; set; }
 
         public IEnumerable<VoucherPurchasePaymentDto> VoucherPurchasePayments { get; set; }
+
+        public IEnumerable<ISmartVoucherPayment> SmartVoucherPayments { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MAVN.Service.OperationsHistory.Domain.Models;
@@ -32,6 +32,12 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
             int pageSize);
 
         Task<PaginatedVoucherPurchasePaymentsHistory> GetVoucherPurchasePaymentsByDatesPaginatedAsync(
+            DateTime fromDate,
+            DateTime toDate,
+            int currentPage,
+            int pageSize);
+
+        Task<PaginatedSmartVoucherPaymentsHistory> GetSmartVoucherPaymentsByDatesPaginatedAsync(
             DateTime fromDate,
             DateTime toDate,
             int currentPage,
