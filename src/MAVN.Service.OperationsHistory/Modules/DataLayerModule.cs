@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using JetBrains.Annotations;
 using Lykke.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
@@ -68,6 +68,10 @@ namespace MAVN.Service.OperationsHistory.Modules
 
             builder.RegisterType<VoucherPurchasePaymentsRepository>()
                 .As<IVoucherPurchasePaymentsRepository>()
+                .SingleInstance();
+
+            builder.RegisterType<SmartVoucherPaymentsRepository>()
+                .As<ISmartVoucherPaymentsRepository>()
                 .SingleInstance();
         }
     }

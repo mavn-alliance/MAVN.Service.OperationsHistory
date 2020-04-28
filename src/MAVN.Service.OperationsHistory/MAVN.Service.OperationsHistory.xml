@@ -40,6 +40,12 @@
             </summary>
             <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedPartnersPaymentsHistoryResponse"/></returns>
         </member>
+        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetSmartVoucherPaymentsByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
+            <summary>
+            Gets paged smart voucher payments history between two dates
+            </summary>
+            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedSmartVoucherPaymentsResponse"/></returns>
+        </member>
         <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetBonusCashInsAsync(System.String,System.String)">
             <summary>
             Gets bonus cash ins transfers for customer per campaign

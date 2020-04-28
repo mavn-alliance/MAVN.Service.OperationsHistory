@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +19,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IPartnersPaymentsRepository _partnersPaymentsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
         private readonly ICustomerProfileClient _customerProfileClient;
+        private readonly ISmartVoucherPaymentsRepository _smartVoucherPaymentsRepository;
         private readonly ILog _log;
 
         public OperationsQueryService(
@@ -28,6 +29,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IPartnersPaymentsRepository partnersPaymentsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
             ICustomerProfileClient customerProfileClient,
+            ISmartVoucherPaymentsRepository smartVoucherPaymentsRepository,
             ILogFactory logFactory)
         {
             _transactionHistoryRepository = transactionHistoryRepository;
@@ -36,6 +38,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _partnersPaymentsRepository = partnersPaymentsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
             _customerProfileClient = customerProfileClient;
+            _smartVoucherPaymentsRepository = smartVoucherPaymentsRepository;
             _log = logFactory.CreateLog(this);
         }
 
@@ -114,6 +117,20 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             var (skip, take) = ValidateAndCalculateSkipAndTake(currentPage, pageSize);
 
             return _voucherPurchasePaymentsRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
+        }
+
+        public Task<PaginatedSmartVoucherPaymentsHistory> GetSmartVoucherPaymentsByDatesPaginatedAsync(
+            DateTime fromDate,
+            DateTime toDate,
+            int currentPage,
+            int pageSize)
+        {
+            if (fromDate >= toDate)
+                throw new InvalidOperationException($"{nameof(fromDate)} must be earlier than {nameof(toDate)}");
+
+            var (skip, take) = ValidateAndCalculateSkipAndTake(currentPage, pageSize);
+
+            return _smartVoucherPaymentsRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
         }
 
         public async Task<IEnumerable<IBonusCashIn>> GetBonusCashInsAsync(string customerId, string campaignId)

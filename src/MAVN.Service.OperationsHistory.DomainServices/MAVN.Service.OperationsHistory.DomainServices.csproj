@@ -21,5 +21,6 @@
     <PackageReference Include="Falcon.Service.WalletManagement.Contract" Version="3.8.0" />
     <PackageReference Include="Falcon.Service.Tiers.Contract" Version="1.0.0" />
     <PackageReference Include="Lykke.RabbitMqBroker" Version="7.12.0" />
+    <PackageReference Include="MAVN.Service.PaymentManagement.Contract" Version="1.6.0" />
   </ItemGroup>
 </Project>

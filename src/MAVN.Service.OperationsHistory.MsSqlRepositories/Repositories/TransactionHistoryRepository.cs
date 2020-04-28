@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -201,6 +201,10 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                         Timestamp = x.Timestamp
                     })
                     .ToListAsync();
+
+                var smartVoucherPayments = await context.SmartVoucherPayments
+                    .Where(t => transactionsQuery.Any(x => x.TransactionId == t.PaymentRequestId))
+                    .ToListAsync();
                 
                 return new PaginatedCustomerOperationsModel
                 {
@@ -215,7 +219,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     ReleasedReferralStakes = releasedReferralStakes,
                     LinkedWalletTransfers = linkedWalletTransfers,
                     FeeCollectedOperations = feeCollectedOperations,
-                    VoucherPurchasePayments = voucherPurchasePayments
+                    VoucherPurchasePayments = voucherPurchasePayments,
+                    SmartVoucherPayments = smartVoucherPayments,
                 };
             }
         }

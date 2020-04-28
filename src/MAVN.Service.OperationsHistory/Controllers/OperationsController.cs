@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
@@ -143,6 +143,28 @@ namespace MAVN.Service.OperationsHistory.Controllers
                 paginationModel.PageSize);
 
             return _mapper.Map<PaginatedVoucherPurchasePaymentsHistoryResponse>(result);
+        }
+
+        /// <summary>
+        /// Gets paged smart voucher payments history between two dates
+        /// </summary>
+        /// <returns><see cref="PaginatedSmartVoucherPaymentsResponse"/></returns>
+        [HttpGet("smart-voucher-payments")]
+        [ProducesResponseType(typeof(PaginatedSmartVoucherPaymentsResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<PaginatedSmartVoucherPaymentsResponse> GetSmartVoucherPaymentsByDatesAsync(
+            PaginationModelWithDatesRange paginationModel)
+        {
+            if (paginationModel.FromDate >= paginationModel.ToDate)
+                throw new BadRequestException($"{nameof(paginationModel.FromDate)} must be earlier than {nameof(paginationModel.ToDate)}");
+
+            var result = await _operationsQueryService.GetSmartVoucherPaymentsByDatesPaginatedAsync(
+                paginationModel.FromDate,
+                paginationModel.ToDate,
+                paginationModel.CurrentPage,
+                paginationModel.PageSize);
+
+            return _mapper.Map<PaginatedSmartVoucherPaymentsResponse>(result);
         }
 
         /// <summary>

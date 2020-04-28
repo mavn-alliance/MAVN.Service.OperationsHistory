@@ -1,4 +1,4 @@
-namespace MAVN.Service.OperationsHistory.Domain.Models
+﻿namespace MAVN.Service.OperationsHistory.Domain.Models
 {
     public enum OperationType
     {
@@ -13,6 +13,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
         LinkedWalletOutgoingTransfer,
         LinkedWalletIncomingTransfer,
         FeeCollected,
-        VoucherPurchasePayment
+        VoucherPurchasePayment,
+        SmartVoucherPayment
     }
 }

@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using MAVN.Service.OperationsHistory.Client.Models.Responses;
 using MAVN.Service.OperationsHistory.Domain.Models;
 
@@ -39,7 +39,8 @@ namespace MAVN.Service.OperationsHistory.MappingProfiles
                 .ForMember(s => s.ReleasedReferralStakes, o => o.Ignore())
                 .ForMember(s => s.LinkedWalletTransfers, o => o.Ignore())
                 .ForMember(s => s.FeeCollectedOperations, o => o.Ignore())
-                .ForMember(s => s.VoucherPurchasePayments, o => o.Ignore());
+                .ForMember(s => s.VoucherPurchasePayments, o => o.Ignore())
+                .ForMember(s => s.SmartVoucherPayments, o => o.Ignore());
 
             CreateMap<BasePagedModel, PaginatedTransactionHistoryResponse>()
                 .ForMember(s => s.TransactionsHistory, o => o.Ignore());
@@ -62,6 +63,9 @@ namespace MAVN.Service.OperationsHistory.MappingProfiles
 
             CreateMap<FeeCollectedOperationDto, FeeCollectedOperationResponse>()
                 .ForMember(x => x.Reason, opt => opt.MapFrom(l => l.Reason));
+
+            CreateMap<PaginatedSmartVoucherPaymentsHistory, PaginatedSmartVoucherPaymentsResponse>();
+            CreateMap<ISmartVoucherPayment, SmartVoucherPaymentResponse>();
         }
     }
 }

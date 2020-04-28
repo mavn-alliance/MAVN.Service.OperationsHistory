@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using MAVN.Service.OperationsHistory.Client.Models.Requests;
@@ -56,6 +56,14 @@ namespace MAVN.Service.OperationsHistory.Client
         /// <param name="paginationModel">Information of which page you want the data for</param>
         [Get("/api/voucher-purchases")]
         Task<PaginatedVoucherPurchasePaymentsHistoryResponse> GetVoucherPurchasePaymentsByDatesAsync(PaginationModelWithDatesRange paginationModel);
+
+        /// <summary>
+        /// Gets paged smart voucher payments history between two dates
+        /// </summary>
+        /// <returns><see cref="PaginatedSmartVoucherPaymentsResponse"/></returns>
+        [Get("/api/smart-voucher-payments")]
+        Task<PaginatedSmartVoucherPaymentsResponse> GetSmartVoucherPaymentsByDatesAsync(
+            PaginationModelWithDatesRange paginationModel);
 
         /// <summary>
         /// Gets bonus cash ins transfers for customer per campaign
