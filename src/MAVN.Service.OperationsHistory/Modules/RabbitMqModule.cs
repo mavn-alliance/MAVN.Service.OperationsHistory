@@ -28,8 +28,6 @@ namespace MAVN.Service.OperationsHistory.Modules
         private const string VoucherTokensUsedExchangeName = "lykke.wallet.vouchertokensused";
         private const string SmartVoucherPaymentExchangeName = "lykke.payment.completed";
 
-
-
         private readonly string _connString;
         private readonly bool _isPublicBlockchainFeatureDisabled;
 

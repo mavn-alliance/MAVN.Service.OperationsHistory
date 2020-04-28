@@ -24,7 +24,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
             _log = logFactory.CreateLog(this);
         }
 
-
         protected override async Task ProcessMessageAsync(PaymentCompletedEvent message)
         {
             var dto = new SmartVoucherPaymentDto

@@ -111,7 +111,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
             voucherPurchasePaymentBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
             voucherPurchasePaymentBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
 
-
             var smartVoucherPaymentBuilder = modelBuilder.Entity<SmartVoucherPaymentEntity>();
 
             smartVoucherPaymentBuilder.HasIndex(t => t.Timestamp).IsUnique(false);

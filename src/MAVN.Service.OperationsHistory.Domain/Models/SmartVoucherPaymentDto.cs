@@ -10,6 +10,5 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
         public decimal Amount { get; set; }
         public string AssetSymbol { get; set; }
         public DateTime Timestamp { get; set; }
-
     }
 }
