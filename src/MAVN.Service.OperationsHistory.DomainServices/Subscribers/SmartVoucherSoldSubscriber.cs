@@ -4,16 +4,16 @@ using Lykke.Common.Log;
 using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Services;
-using MAVN.Service.PaymentManagement.Contract;
+using MAVN.Service.SmartVouchers.Contract;
 
 namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
 {
-    public class SmartVoucherPaymentCompletedSubscriber : JsonRabbitSubscriber<PaymentCompletedEvent>
+    public class SmartVoucherSoldSubscriber : JsonRabbitSubscriber<SmartVoucherSoldEvent>
     {
         private readonly IOperationsService _operationsService;
         private readonly ILog _log;
 
-        public SmartVoucherPaymentCompletedSubscriber(
+        public SmartVoucherSoldSubscriber(
             string connectionString,
             string exchangeName,
             string queueName,
@@ -24,7 +24,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
             _log = logFactory.CreateLog(this);
         }
 
-        protected override async Task ProcessMessageAsync(PaymentCompletedEvent message)
+        protected override async Task ProcessMessageAsync(SmartVoucherSoldEvent message)
         {
             var dto = new SmartVoucherPaymentDto
             {
@@ -32,12 +32,14 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
                 AssetSymbol = message.Currency,
                 CustomerId = message.CustomerId,
                 PartnerId = message.PartnerId,
+                ShortCode = message.VoucherShortCode,
+                Timestamp = message.Timestamp,
+                CampaignId = message.CampaignId,
                 PaymentRequestId = message.PaymentRequestId,
-                Timestamp = message.Timestamp
             };
 
-            await _operationsService.ProcessSmartVoucherPaymentCompletedEventAsync(dto);
-            _log.Info("Processed PaymentCompletedEvent", context:message);
+            await _operationsService.ProcessSmartVoucherSoldEventAsync(dto);
+            _log.Info("Processed SmartVoucherSoldEvent", context:message);
         }
     }
 }

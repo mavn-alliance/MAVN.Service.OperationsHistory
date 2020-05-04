@@ -12,10 +12,16 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
         public string PaymentRequestId { get; set; }
 
         [Required]
+        public string ShortCode { get; set; }
+
+        [Required]
         public Guid CustomerId { get; set; }
 
         [Required]
         public Guid PartnerId { get; set; }
+
+        [Required]
+        public Guid CampaignId { get; set; }
 
         [Required]
         public decimal Amount { get; set; }
@@ -33,9 +39,11 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
                 Timestamp = payment.Timestamp,
                 PartnerId = payment.PartnerId,
                 Amount = payment.Amount,
-                PaymentRequestId = payment.PaymentRequestId,
+                ShortCode = payment.ShortCode,
                 AssetSymbol = payment.AssetSymbol,
                 CustomerId = payment.CustomerId,
+                CampaignId = payment.CampaignId,
+                PaymentRequestId = payment.PaymentRequestId,
             };
         }
     }
