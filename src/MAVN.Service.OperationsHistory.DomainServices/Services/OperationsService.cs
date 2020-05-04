@@ -265,7 +265,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             return _voucherPurchasePaymentsRepository.InsertAsync(voucherPurchasePaymentOperation);
         }
 
-        public async Task ProcessSmartVoucherPaymentCompletedEventAsync(SmartVoucherPaymentDto smartVoucherPayment)
+        public async Task ProcessSmartVoucherSoldEventAsync(SmartVoucherPaymentDto smartVoucherPayment)
         {
             var isValid = ValidateSmartVoucherPaymentOperation(smartVoucherPayment);
 
@@ -663,6 +663,18 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             {
                 isValid = false;
                 _log.Warning("Smart voucher payment without customer id", context: smartVoucherPayment);
+            }
+
+            if (smartVoucherPayment.CampaignId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without campaign id", context: smartVoucherPayment);
+            }
+
+            if (string.IsNullOrEmpty(smartVoucherPayment.ShortCode))
+            {
+                isValid = false;
+                _log.Warning("Smart voucher payment without short code", context: smartVoucherPayment);
             }
 
             if (string.IsNullOrEmpty(smartVoucherPayment.PaymentRequestId))

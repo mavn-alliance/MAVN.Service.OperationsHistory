@@ -14,6 +14,14 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// </summary>
         public string PaymentRequestId { get; set; }
         /// <summary>
+        /// Short code of the voucher
+        /// </summary>
+        public string ShortCode { get; set; }
+        /// <summary>
+        /// The id of the campaign
+        /// </summary>
+        public Guid CampaignId { get; set; }
+        /// <summary>
         /// The id of the customer
         /// </summary>
         public Guid CustomerId { get; set; }
