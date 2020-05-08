@@ -19,12 +19,6 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
             int currentPage,
             int pageSize);
 
-        Task<PaginatedPaymentTransfersHistory> GetPaymentTransfersByDatesPaginatedAsync(
-            DateTime fromDate,
-            DateTime toDate,
-            int currentPage,
-            int pageSize);
-
         Task<PaginatedPartnersPaymentsHistory> GetPartnersPaymentsByDatesPaginatedAsync(
             DateTime fromDate,
             DateTime toDate,

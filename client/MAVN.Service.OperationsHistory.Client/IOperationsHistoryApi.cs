@@ -37,13 +37,6 @@ namespace MAVN.Service.OperationsHistory.Client
         Task<PaginatedBonusesHistoryResponse> GetBonusesByDatesAsync(PaginationModelWithDatesRange paginationModel);
 
         /// <summary>
-        /// Gets paged payment transfers history between two dates
-        /// </summary>
-        /// <param name="paginationModel">Information of which page you want the data for</param>
-        [Get("/api/payment-transfers")]
-        Task<PaginatedPaymentTransfersHistoryResponse> GetPaymentTransfersByDatesAsync(PaginationModelWithDatesRange paginationModel);
-
-        /// <summary>
         /// Gets paged partners payments history between two dates
         /// </summary>
         /// <param name="paginationModel">Information of which page you want the data for</param>

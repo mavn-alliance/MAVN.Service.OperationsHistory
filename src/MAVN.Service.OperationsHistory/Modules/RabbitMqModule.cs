@@ -15,8 +15,6 @@ namespace MAVN.Service.OperationsHistory.Modules
         private const string WalletLinkingStatusChangeCompletedExchangeName = "lykke.wallet.walletlinkingstatuschangecompleted";
 
         private const string DefaultQueueName = "operationshistory";
-        private const string PaymentTransferTokensReservedExchange = "lykke.wallet.transfertokensreserved";
-        private const string RefundPaymentTransferExchange = "lykke.wallet.refundpaymenttransfer";
         private const string PartnersPaymentTokensReservedExchange = "lykke.wallet.partnerspaymenttokensreserved";
         private const string RefundPartnersPaymentExchange = "lykke.wallet.refundpartnerspayment";
         private const string BonusReceivedExchangeName = "lykke.wallet.bonusreceived";
@@ -61,20 +59,6 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .WithParameter("connectionString", _connString)
                 .WithParameter("exchangeName", CustomerTierChangedExchangeName)
                 .WithParameter("queueName", DefaultQueueName);
-
-            builder.RegisterType<PaymentTransferTokensReservedSubscriber>()
-                .As<IStartStop>()
-                .WithParameter("connectionString", _connString)
-                .WithParameter("exchangeName", PaymentTransferTokensReservedExchange)
-                .WithParameter("queueName", DefaultQueueName)
-                .SingleInstance();
-
-            builder.RegisterType<RefundPaymentTransferSubscriber>()
-                .As<IStartStop>()
-                .WithParameter("connectionString", _connString)
-                .WithParameter("exchangeName", RefundPaymentTransferExchange)
-                .WithParameter("queueName", DefaultQueueName)
-                .SingleInstance();
 
             builder.RegisterType<RefundPartnersPaymentSubscriber>()
                 .As<IStartStop>()

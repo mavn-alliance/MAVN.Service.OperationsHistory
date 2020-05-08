@@ -80,28 +80,6 @@ namespace MAVN.Service.OperationsHistory.Controllers
         }
 
         /// <summary>
-        /// Gets paged payment tarnsfers history between two dates
-        /// </summary>
-        /// <returns><see cref="PaginatedPaymentTransfersHistoryResponse"/></returns>
-        [HttpGet("payment-transfers")]
-        [ProducesResponseType(typeof(PaginatedPaymentTransfersHistoryResponse), (int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<PaginatedPaymentTransfersHistoryResponse> GetPaymentTransfersByDatesAsync(
-            PaginationModelWithDatesRange paginationModel)
-        {
-            if (paginationModel.FromDate >= paginationModel.ToDate)
-                throw new BadRequestException($"{nameof(paginationModel.FromDate)} must be earlier than {nameof(paginationModel.ToDate)}");
-
-            var result = await _operationsQueryService.GetPaymentTransfersByDatesPaginatedAsync(
-                paginationModel.FromDate,
-                paginationModel.ToDate,
-                paginationModel.CurrentPage,
-                paginationModel.PageSize);
-
-            return _mapper.Map<PaginatedPaymentTransfersHistoryResponse>(result);
-        }
-
-        /// <summary>
         /// Gets paged partners payments history between two dates
         /// </summary>
         /// <returns><see cref="PaginatedPartnersPaymentsHistoryResponse"/></returns>

@@ -1,13 +1,13 @@
-using Autofac;
+﻿using Autofac;
 using Lykke.Sdk;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.CustomerProfile.Client;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.CustomerProfile.Client;
 using MAVN.Service.OperationsHistory.Domain.Services;
 using MAVN.Service.OperationsHistory.DomainServices.Services;
 using MAVN.Service.OperationsHistory.Services;
 using MAVN.Service.OperationsHistory.Settings;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
 using Lykke.SettingsReader;
 
 namespace MAVN.Service.OperationsHistory.Modules

@@ -4,14 +4,16 @@ using MAVN.Service.OperationsHistory.MsSqlRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
 {
     [DbContext(typeof(OperationsHistoryContext))]
-    partial class OperationsHistoryContextModelSnapshot : ModelSnapshot
+    [Migration("20200508070933_RemovePAymentTransfers")]
+    partial class RemovePAymentTransfers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

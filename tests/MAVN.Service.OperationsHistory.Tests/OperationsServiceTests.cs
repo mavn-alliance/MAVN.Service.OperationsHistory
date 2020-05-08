@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lykke.Logs;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Campaign.Client.Models.BurnRule.Responses;
-using Lykke.Service.Campaign.Client.Models.Campaign.Responses;
-using Lykke.Service.Campaign.Client.Models.Condition;
-using Lykke.Service.Campaign.Client.Models.Enums;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client.Models.BurnRule.Responses;
+using MAVN.Service.Campaign.Client.Models.Campaign.Responses;
+using MAVN.Service.Campaign.Client.Models.Condition;
+using MAVN.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.DomainServices.Services;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client.Models;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client.Models;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
 using Xunit;
@@ -45,7 +45,6 @@ namespace MAVN.Service.OperationsHistory.Tests
         private readonly Mock<ICampaignClient> _campaignClientMock = new Mock<ICampaignClient>();
         private readonly Mock<ITransfersRepository> _transfersRepoMock = new Mock<ITransfersRepository>();
         private readonly Mock<IPrivateBlockchainFacadeClient> _pbfServiceClientMock = new Mock<IPrivateBlockchainFacadeClient>();
-        private readonly Mock<IPaymentTransfersRepository> _paymentTransferRepoMock = new Mock<IPaymentTransfersRepository>();
         private readonly Mock<ICustomerTierRepository> _customerTierRepositoryMock = new Mock<ICustomerTierRepository>();
         private readonly Mock<IPartnersPaymentsRepository> _partnersPaymentsRepoMock = new Mock<IPartnersPaymentsRepository>();
         private readonly Mock<IPartnerManagementClient> _partnerManagementClientMock = new Mock<IPartnerManagementClient>();
@@ -276,116 +275,6 @@ namespace MAVN.Service.OperationsHistory.Tests
             _bonusRepoMock.Verify(x => x.AddAsync(It.IsAny<BonusCashInDto>()), Times.Never);
         }
 
-
-        [Fact]
-        public async Task TryToProcessPaymentTransferEvent_EverythingValid_SuccessfullyProcessed()
-        {
-            var campaignResponseModel = new BurnRuleResponse { Title = "burnRule" };
-            _campaignClientMock.Setup(x => x.History.GetBurnRuleByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(campaignResponseModel);
-
-            _paymentTransferRepoMock.Setup(x => x.AddPaymentTransferAsync(It.IsAny<PaymentTransferDto>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-
-            var paymentTransfer = new PaymentTransferDto
-            {
-                AssetSymbol = "asset",
-                TransferId = "transferId",
-                Amount = 100,
-                CustomerId = "customerId",
-                InvoiceId = "invoiceId",
-                BurnRuleId = "3cfd1d93-34e4-44a5-9ccd-96734b24faa4",
-            };
-
-            var operationsService = CreateSutInstance();
-
-            await operationsService.ProcessPaymentTransferTokensReservedEventAsync(paymentTransfer);
-            _paymentTransferRepoMock.Verify();
-        }
-
-        [Fact]
-        public async Task TryToProcessPaymentTransferEvent_BurnRuleNotFound_SuccessfullyProcessedWithMissingName()
-        {
-            _campaignClientMock.Setup(x => x.History.GetBurnRuleByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(new BurnRuleResponse { ErrorCode = CampaignServiceErrorCodes.EntityNotFound });
-
-            _paymentTransferRepoMock.Setup(x => x.AddPaymentTransferAsync(It.IsAny<PaymentTransferDto>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-
-            var paymentTransfer = new PaymentTransferDto
-            {
-                AssetSymbol = "asset",
-                TransferId = "transferId",
-                Amount = 100,
-                CustomerId = "customerId",
-                InvoiceId = "invoiceId",
-                BurnRuleId = "3cfd1d93-34e4-44a5-9ccd-96734b24faa4",
-            };
-
-            var operationsService = CreateSutInstance();
-
-            await operationsService.ProcessPaymentTransferTokensReservedEventAsync(paymentTransfer);
-            _paymentTransferRepoMock.Verify(x => x.AddPaymentTransferAsync(It.Is<PaymentTransferDto>(o => o.BurnRuleName == "N/A")));
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(10_000_000_000)]
-        public async Task TryToProcessPaymentTransferEventEvent_InvalidBalance_SuccessfullyProcessedWithWarning(long amount)
-        {
-            var campaignResponseModel = new BurnRuleResponse { Title = "burnRule" };
-            _campaignClientMock.Setup(x => x.History.GetBurnRuleByIdAsync(It.IsAny<Guid>()))
-                .ReturnsAsync(campaignResponseModel);
-
-            _paymentTransferRepoMock.Setup(x => x.AddPaymentTransferAsync(It.IsAny<PaymentTransferDto>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-
-            var paymentTransfer = new PaymentTransferDto
-            {
-                AssetSymbol = "asset",
-                TransferId = "transferId",
-                Amount = amount,
-                CustomerId = "customerId",
-                InvoiceId = "invoiceId",
-                BurnRuleId = "3cfd1d93-34e4-44a5-9ccd-96734b24faa4",
-            };
-
-            var operationsService = CreateSutInstance();
-
-            await operationsService.ProcessPaymentTransferTokensReservedEventAsync(paymentTransfer);
-            _paymentTransferRepoMock.Verify();
-        }
-
-        [Theory]
-        [InlineData(null, "customerId", "type", "campaign")]
-        [InlineData("transactionId", null, "type", "campaign")]
-        [InlineData("transactionId", "customerId", null, "campaign")]
-        [InlineData("transactionId", "customerId", "type", null)]
-        public async Task TryToPaymentTransferEvent_MissingDataInEvent_NotProcessed
-                (string transferId, string customerId, string invoiceId, string burnRuleId)
-        {
-            _paymentTransferRepoMock.Setup(x => x.AddPaymentTransferAsync(It.IsAny<PaymentTransferDto>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-
-            var paymentTransfer = new PaymentTransferDto
-            {
-                TransferId = transferId,
-                Amount = 100,
-                CustomerId = customerId,
-                InvoiceId = invoiceId,
-                BurnRuleId = burnRuleId,
-            };
-
-            var operationsService = CreateSutInstance();
-
-            await operationsService.ProcessPaymentTransferTokensReservedEventAsync(paymentTransfer);
-            _paymentTransferRepoMock.Verify(x => x.AddPaymentTransferAsync(It.IsAny<PaymentTransferDto>()), Times.Never);
-        }
-
         [Theory]
         [InlineData(-1)]
         [InlineData(10_000_000_000)]
@@ -451,7 +340,6 @@ namespace MAVN.Service.OperationsHistory.Tests
                 _bonusRepoMock.Object,
                 _campaignClientMock.Object,
                 _pbfServiceClientMock.Object,
-                _paymentTransferRepoMock.Object,
                 _customerTierRepositoryMock.Object,
                 new MemoryCache(new MemoryCacheOptions()),
                 new TimeSpan(0, 0, 1),

@@ -22,12 +22,6 @@
             </summary>
             <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedBonusesHistoryResponse"/></returns>
         </member>
-        <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetPaymentTransfersByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
-            <summary>
-            Gets paged payment tarnsfers history between two dates
-            </summary>
-            <returns><see cref="T:MAVN.Service.OperationsHistory.Client.Models.Responses.PaginatedPaymentTransfersHistoryResponse"/></returns>
-        </member>
         <member name="M:MAVN.Service.OperationsHistory.Controllers.OperationsController.GetPartnersPaymentsByDatesAsync(MAVN.Service.OperationsHistory.Client.Models.Requests.PaginationModelWithDatesRange)">
             <summary>
             Gets paged partners payments history between two dates

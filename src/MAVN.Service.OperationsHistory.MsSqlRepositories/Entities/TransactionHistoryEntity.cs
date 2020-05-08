@@ -67,30 +67,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
             };
         }
 
-        public static TransactionHistoryEntity CreateForPaymentTransferTokensReservation(PaymentTransferDto paymentTransfer)
-        {
-            return new TransactionHistoryEntity
-            {
-                CustomerId = paymentTransfer.CustomerId,
-                Timestamp = paymentTransfer.Timestamp,
-                TransactionId = paymentTransfer.TransferId,
-                AssetSymbol = paymentTransfer.AssetSymbol,
-                Type = OperationType.PaymentTransferTokensReserved.ToString(),
-            };
-        }
-
-        public static TransactionHistoryEntity CreateForPaymentTransferRefund(PaymentTransferDto paymentTransfer)
-        {
-            return new TransactionHistoryEntity
-            {
-                CustomerId = paymentTransfer.CustomerId,
-                Timestamp = paymentTransfer.Timestamp,
-                TransactionId = paymentTransfer.TransferId,
-                AssetSymbol = paymentTransfer.AssetSymbol,
-                Type = OperationType.PaymentTransferRefunded.ToString(),
-            };
-        }
-
         public static TransactionHistoryEntity CreateForPartnerPaymentTokensReservation(PartnerPaymentDto partnerPayment)
         {
             return new TransactionHistoryEntity

@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Lykke.Logs;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.CustomerProfile.Client.Models.Responses;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client.Models.Responses;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.DomainServices.Services;
@@ -23,7 +23,6 @@ namespace MAVN.Service.OperationsHistory.Tests
 
         private readonly Mock<ITransactionHistoryRepository> _transactionsHistoryRepoMock = new Mock<ITransactionHistoryRepository>();
         private readonly Mock<IBonusCashInsRepository> _bonusesRepoMock = new Mock<IBonusCashInsRepository>();
-        private readonly Mock<IPaymentTransfersRepository> _paymentTransfersRepoMock = new Mock<IPaymentTransfersRepository>();
         private readonly Mock<IPartnersPaymentsRepository> _partnersPaymentsRepoMock = new Mock<IPartnersPaymentsRepository>();
         private readonly Mock<IVoucherPurchasePaymentsRepository> _vouchersPaymentsRepoMock = new Mock<IVoucherPurchasePaymentsRepository>();
         private readonly Mock<ISmartVoucherPaymentsRepository> _smartVoucherPaymentsRepoMock = new Mock<ISmartVoucherPaymentsRepository>();
@@ -52,19 +51,19 @@ namespace MAVN.Service.OperationsHistory.Tests
                 });
 
             var customerIds = new [] {FakeSenderCustomerId, FakeReceiverCustomerId, FakeReceiver2CustomerId};
-            var customerProfiles = new List<CustomerProfile>
+            var customerProfiles = new List<CustomerProfile.Client.Models.Responses.CustomerProfile>
             {
-                new CustomerProfile
+                new CustomerProfile.Client.Models.Responses.CustomerProfile
                 {
                     CustomerId = FakeSenderCustomerId,
                     Email = FakeSenderCustomerEmail
                 },
-                new CustomerProfile
+                new CustomerProfile.Client.Models.Responses.CustomerProfile
                 {
                     CustomerId = FakeReceiverCustomerId,
                     Email = FakeReceiverCustomerEmail
                 },
-                new CustomerProfile
+                new CustomerProfile.Client.Models.Responses.CustomerProfile
                 {
                     CustomerId = FakeReceiver2CustomerId,
                     Email = FakeReceiver2CustomerEmail
@@ -92,7 +91,6 @@ namespace MAVN.Service.OperationsHistory.Tests
             return new OperationsQueryService(
                 _transactionsHistoryRepoMock.Object,
                 _bonusesRepoMock.Object,
-                _paymentTransfersRepoMock.Object,
                 _partnersPaymentsRepoMock.Object,
                 _vouchersPaymentsRepoMock.Object,
                 _cPClientMock.Object,

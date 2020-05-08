@@ -18,16 +18,6 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         public IEnumerable<BonusCashInResponse> BonusCashIns { get; set; }
 
         /// <summary>
-        /// List of payment transfers
-        /// </summary>
-        public IEnumerable<PaymentTransferResponse> PaymentTransfers { get; set; }
-
-        /// <summary>
-        /// List of refunded Payment transfers
-        /// </summary>
-        public IEnumerable<PaymentTransferResponse> RefundedPaymentTransfers { get; set; }
-
-        /// <summary>
         /// List of partner payments
         /// </summary>
         public IEnumerable<PartnersPaymentResponse> PartnersPayments { get; set; }
