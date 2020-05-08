@@ -1,9 +1,9 @@
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Lykke.Sdk.Settings;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.CustomerProfile.Client;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.CustomerProfile.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
 
 namespace MAVN.Service.OperationsHistory.Settings
 {

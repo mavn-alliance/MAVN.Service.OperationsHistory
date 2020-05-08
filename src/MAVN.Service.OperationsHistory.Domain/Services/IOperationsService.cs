@@ -9,13 +9,9 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
 
         Task ProcessBonusReceivedEventAsync(BonusCashInDto bonusCashIn);
 
-        Task ProcessPaymentTransferTokensReservedEventAsync(PaymentTransferDto paymentTransferDto);
-
         Task ProcessCustomerTierChangedEventAsync(CustomerTierModel customerTier);
 
         Task ProcessPartnersPaymentTokensReservedEventAsync(PartnerPaymentDto partnerPayment);
-
-        Task ProcessRefundPaymentTransferEventAsync(PaymentTransferDto paymentTransferDto);
 
         Task ProcessRefundPartnersPaymentEventAsync(PartnerPaymentDto partnerPayment);
 

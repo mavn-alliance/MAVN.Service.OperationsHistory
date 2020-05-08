@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Cache;
 using Lykke.Common.Log;
-using Lykke.Service.Campaign.Client;
-using Lykke.Service.Campaign.Client.Models.Enums;
+using MAVN.Service.Campaign.Client;
+using MAVN.Service.Campaign.Client.Models.Enums;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.Domain.Services;
-using Lykke.Service.PartnerManagement.Client;
-using Lykke.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.PartnerManagement.Client;
+using MAVN.Service.PrivateBlockchainFacade.Client;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace MAVN.Service.OperationsHistory.DomainServices.Services
@@ -21,7 +21,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IBonusCashInsRepository _bonusCashInsRepository;
         private readonly ICampaignClient _campaignClient;
         private readonly IPrivateBlockchainFacadeClient _privateBlockchainFacadeClient;
-        private readonly IPaymentTransfersRepository _paymentTransfersRepository;
         private readonly ICustomerTierRepository _customerTierRepository;
         private readonly OnDemandDataCache<string> _customerWalletsCache;
         private readonly TimeSpan _customerWalletsCacheExpirationPeriod;
@@ -40,7 +39,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IBonusCashInsRepository bonusCashInsRepository,
             ICampaignClient campaignClient,
             IPrivateBlockchainFacadeClient privateBlockchainFacadeClient,
-            IPaymentTransfersRepository paymentTransfersRepository,
             ICustomerTierRepository customerTierRepository,
             IMemoryCache memoryCache,
             TimeSpan customerWalletsCacheExpirationPeriod,
@@ -59,7 +57,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _bonusCashInsRepository = bonusCashInsRepository;
             _campaignClient = campaignClient;
             _privateBlockchainFacadeClient = privateBlockchainFacadeClient;
-            _paymentTransfersRepository = paymentTransfersRepository;
             _customerTierRepository = customerTierRepository;
             _customerWalletsCacheExpirationPeriod = customerWalletsCacheExpirationPeriod;
             _tokenSymbol = tokenSymbol;
@@ -126,30 +123,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             }
 
             await _bonusCashInsRepository.AddAsync(bonusCashIn);
-        }
-
-        public async Task ProcessPaymentTransferTokensReservedEventAsync(PaymentTransferDto paymentTransferDto)
-        {
-            var isValid = ValidatePaymentTransfer(paymentTransferDto);
-
-            if (!isValid)
-                return;
-
-            await AddAdditionalDataToPaymentTransfer(paymentTransferDto);
-
-            await _paymentTransfersRepository.AddPaymentTransferAsync(paymentTransferDto);
-        }
-
-        public async Task ProcessRefundPaymentTransferEventAsync(PaymentTransferDto paymentTransferDto)
-        {
-            var isValid = ValidatePaymentTransfer(paymentTransferDto);
-
-            if (!isValid)
-                return;
-
-            await AddAdditionalDataToPaymentTransfer(paymentTransferDto);
-
-            await _paymentTransfersRepository.AddPaymentTransferRefundAsync(paymentTransferDto);
         }
 
         public async Task ProcessRefundPartnersPaymentEventAsync(PartnerPaymentDto partnerPayment)
@@ -292,27 +265,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             }
         }
 
-        private async Task AddAdditionalDataToPaymentTransfer(PaymentTransferDto paymentTransferDto)
-        {
-            paymentTransferDto.AssetSymbol = _tokenSymbol;
-
-            paymentTransferDto.InstalmentName = string.IsNullOrEmpty(paymentTransferDto.InstalmentName)
-                ? "DefaultInstalmentName"
-                : paymentTransferDto.InstalmentName;
-
-            var burnRule = await _campaignClient.History.GetBurnRuleByIdAsync(Guid.Parse(paymentTransferDto.BurnRuleId));
-
-            if (burnRule.ErrorCode == CampaignServiceErrorCodes.EntityNotFound)
-            {
-                _log.Warning("Burn rule not found for payment transfer event", context: paymentTransferDto);
-                paymentTransferDto.BurnRuleName = "N/A";
-            }
-            else
-            {
-                paymentTransferDto.BurnRuleName = burnRule.Title;
-            }
-        }
-
         private async Task AddAdditionalDataToPartnerPayment(PartnerPaymentDto partnerPaymentDto)
         {
             partnerPaymentDto.AssetSymbol = _tokenSymbol;
@@ -411,52 +363,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             {
                 isValid = false;
                 _log.Warning("Bonus event without campaign id", context: bonus);
-            }
-
-            return isValid;
-        }
-
-        private bool ValidatePaymentTransfer(PaymentTransferDto paymentTransfer)
-        {
-            var isValid = true;
-
-            if (paymentTransfer.Amount <= 0)
-            {
-                _log.Warning("Processed payment transfer event with invalid balance", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.InstalmentName))
-            {
-                _log.Warning("Processed payment transfer with missing Instalment name, Default name will be used", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.LocationCode))
-            {
-                _log.Warning("Processed payment transfer with missing LocationCode", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.TransferId))
-            {
-                isValid = false;
-                _log.Warning("Payment transfer event without transfer id", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.CustomerId))
-            {
-                isValid = false;
-                _log.Warning("Payment transfer event without customer id", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.InvoiceId))
-            {
-                isValid = false;
-                _log.Warning("Payment transfer event without invoice id type", context: paymentTransfer);
-            }
-
-            if (string.IsNullOrEmpty(paymentTransfer.BurnRuleId))
-            {
-                isValid = false;
-                _log.Warning("Payment transfer event without campaign id", context: paymentTransfer);
             }
 
             return isValid;

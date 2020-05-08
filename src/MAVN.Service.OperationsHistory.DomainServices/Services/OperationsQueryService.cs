@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Log;
-using Lykke.Service.CustomerProfile.Client;
+using MAVN.Service.CustomerProfile.Client;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.Domain.Services;
@@ -15,7 +15,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
     {
         private readonly ITransactionHistoryRepository _transactionHistoryRepository;
         private readonly IBonusCashInsRepository _bonusCashInsRepository;
-        private readonly IPaymentTransfersRepository _paymentTransfersRepository;
         private readonly IPartnersPaymentsRepository _partnersPaymentsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
         private readonly ICustomerProfileClient _customerProfileClient;
@@ -25,7 +24,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         public OperationsQueryService(
             ITransactionHistoryRepository transactionHistoryRepository,
             IBonusCashInsRepository bonusCashInsRepository,
-            IPaymentTransfersRepository paymentTransfersRepository,
             IPartnersPaymentsRepository partnersPaymentsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
             ICustomerProfileClient customerProfileClient,
@@ -34,7 +32,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         {
             _transactionHistoryRepository = transactionHistoryRepository;
             _bonusCashInsRepository = bonusCashInsRepository;
-            _paymentTransfersRepository = paymentTransfersRepository;
             _partnersPaymentsRepository = partnersPaymentsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
             _customerProfileClient = customerProfileClient;
@@ -75,20 +72,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             var (skip, take) = ValidateAndCalculateSkipAndTake(currentPage, pageSize);
 
             return _bonusCashInsRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
-        }
-
-        public Task<PaginatedPaymentTransfersHistory> GetPaymentTransfersByDatesPaginatedAsync(
-            DateTime fromDate,
-            DateTime toDate,
-            int currentPage,
-            int pageSize)
-        {
-            if (fromDate >= toDate)
-                throw new InvalidOperationException($"{nameof(fromDate)} must be earlier than {nameof(toDate)}");
-
-            var (skip, take) = ValidateAndCalculateSkipAndTake(currentPage, pageSize);
-
-            return _paymentTransfersRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
         }
 
         public Task<PaginatedPartnersPaymentsHistory> GetPartnersPaymentsByDatesPaginatedAsync(

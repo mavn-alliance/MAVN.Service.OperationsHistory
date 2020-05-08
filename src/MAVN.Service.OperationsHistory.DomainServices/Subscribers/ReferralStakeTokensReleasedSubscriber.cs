@@ -1,10 +1,10 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Log;
 using Lykke.RabbitMqBroker.Subscriber;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Services;
-using Lykke.Service.Staking.Contract.Events;
+using MAVN.Service.Staking.Contract.Events;
 
 namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
 {

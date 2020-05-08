@@ -78,44 +78,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     })
                     .ToArrayAsync();
 
-                var paymentTransfers = await context.PaymentTransfers
-                    .Where(t => transactionsQuery.Any(x =>
-                        x.TransactionId == t.TransferId &&
-                        x.Type == OperationType.PaymentTransferTokensReserved.ToString()))
-                    .Select(x => new PaymentTransferDto
-                    {
-                        Amount = x.Amount,
-                        BurnRuleId = x.BurnRuleId,
-                        BurnRuleName = x.BurnRule.BurnRuleName,
-                        CustomerId = x.CustomerId,
-                        InvoiceId = x.InvoiceId,
-                        Timestamp = x.Timestamp,
-                        TransferId = x.TransferId,
-                        AssetSymbol = x.AssetSymbol,
-                        InstalmentName = x.InstalmentName,
-                        LocationCode = x.LocationCode,
-                    })
-                    .ToArrayAsync();
-
-                var refundedPaymentTransfer = await context.RefundedPaymentTransfers
-                    .Where(t => transactionsQuery.Any(x =>
-                        x.TransactionId == t.TransferId &&
-                        x.Type == OperationType.PaymentTransferRefunded.ToString()))
-                    .Select(x => new PaymentTransferDto
-                    {
-                        Amount = x.Amount,
-                        BurnRuleId = x.BurnRuleId,
-                        BurnRuleName = x.BurnRule.BurnRuleName,
-                        CustomerId = x.CustomerId,
-                        InvoiceId = x.InvoiceId,
-                        Timestamp = x.Timestamp,
-                        TransferId = x.TransferId,
-                        AssetSymbol = x.AssetSymbol,
-                        InstalmentName = x.InstalmentName,
-                        LocationCode = x.LocationCode,
-                    })
-                    .ToArrayAsync();
-
                 var partnersPayments = await context.PartnersPayments
                     .Where(p => transactionsQuery.Any(x =>
                         x.TransactionId == p.PaymentRequestId &&
@@ -211,8 +173,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     Transfers = transfers,
                     BonusCashIns = bonuses,
                     TotalCount = totalCount,
-                    PaymentTransfers = paymentTransfers,
-                    RefundedPaymentTransfers = refundedPaymentTransfer,
                     PartnersPayments = partnersPayments,
                     RefundedPartnersPayments = refundedPartnersPayments,
                     ReferralStakes = referralStakes,

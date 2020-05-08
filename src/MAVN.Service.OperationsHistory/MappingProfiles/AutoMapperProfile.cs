@@ -23,17 +23,14 @@ namespace MAVN.Service.OperationsHistory.MappingProfiles
 
             CreateMap<PaginatedTransactionHistory, PaginatedTransactionHistoryResponse>();
             CreateMap<PaginatedBonusesHistory, PaginatedBonusesHistoryResponse>();
-            CreateMap<PaginatedPaymentTransfersHistory, PaginatedPaymentTransfersHistoryResponse>();
             CreateMap<PaginatedPartnersPaymentsHistory, PaginatedPartnersPaymentsHistoryResponse>();
             CreateMap<PaginatedVoucherPurchasePaymentsHistory, PaginatedVoucherPurchasePaymentsHistoryResponse>();
 
             CreateMap<PaginatedCustomerOperationsModel, PaginatedCustomerOperationsResponse>();
             CreateMap<BasePagedModel, PaginatedCustomerOperationsResponse>()
                 .ForMember(s => s.Transfers, o => o.Ignore())
-                .ForMember(s => s.PaymentTransfers, o => o.Ignore())
                 .ForMember(s => s.BonusCashIns, o => o.Ignore())
                 .ForMember(s => s.PartnersPayments, o => o.Ignore())
-                .ForMember(s => s.RefundedPaymentTransfers, o => o.Ignore())
                 .ForMember(s => s.RefundedPartnersPayments, o => o.Ignore())
                 .ForMember(s => s.ReferralStakes, o => o.Ignore())
                 .ForMember(s => s.ReleasedReferralStakes, o => o.Ignore())
@@ -45,9 +42,6 @@ namespace MAVN.Service.OperationsHistory.MappingProfiles
             CreateMap<BasePagedModel, PaginatedTransactionHistoryResponse>()
                 .ForMember(s => s.TransactionsHistory, o => o.Ignore());
             CreateMap<TokensAmountResultModel, TokensAmountResponseModel>();
-            CreateMap<PaymentTransferDto, PaymentTransferResponse>();
-            CreateMap<IPaymentTransfer, PaymentTransferResponse>()
-                .ForMember(s => s.BurnRuleName, o => o.Ignore());
             CreateMap<CustomerStatisticModel, CustomerStatisticResponse>();
             CreateMap<CustomersStatisticListModel, CustomersStatisticListResponse>();
             CreateMap<IPartnersPayment, PartnersPaymentResponse>();

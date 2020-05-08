@@ -16,9 +16,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
         internal DbSet<BonusCashInEntity> BonusCashIns { get; set; }
         internal DbSet<CampaignEntity> Campaigns { get; set; }
         internal DbSet<BurnRuleEntity> BurnRules { get; set; }
-        internal DbSet<PaymentTransferEntity> PaymentTransfers { get; set; }
         internal DbSet<CustomerTierEntity> CustomerTiers { get; set; }
-        internal DbSet<PaymentTransferRefundEntity> RefundedPaymentTransfers { get; set; }
         internal DbSet<PartnersPaymentEntity> PartnersPayments { get; set; }
         internal DbSet<PartnersPaymentRefundEntity> RefundedPartnersPayments { get; set; }
         internal DbSet<ReferralStakeEntity> ReferralStakes { get; set; }
@@ -61,16 +59,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
             historyEntityBuilder.HasIndex(h => h.CustomerId).IsUnique(false);
             historyEntityBuilder.HasIndex(h => h.TransactionId).IsUnique(false);
             historyEntityBuilder.HasIndex(h => h.Timestamp).IsUnique(false);
-
-            var paymentTransferEntityBuilder = modelBuilder.Entity<PaymentTransferEntity>();
-
-            paymentTransferEntityBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
-            paymentTransferEntityBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
-
-            var paymentTransferRefundEntityBuilder = modelBuilder.Entity<PaymentTransferRefundEntity>();
-
-            paymentTransferRefundEntityBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
-            paymentTransferRefundEntityBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
 
             var partnersPaymentsEntityBuilder = modelBuilder.Entity<PartnersPaymentEntity>();
 

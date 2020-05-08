@@ -8,11 +8,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
 
         public IEnumerable<Transfer> Transfers { get; set; }
 
-        public IEnumerable<PaymentTransferDto> PaymentTransfers { get; set; }
-
         public IEnumerable<IPartnersPayment> PartnersPayments { get; set; }
-
-        public IEnumerable<PaymentTransferDto> RefundedPaymentTransfers { get; set; }
 
         public IEnumerable<IPartnersPayment> RefundedPartnersPayments { get; set; }
 

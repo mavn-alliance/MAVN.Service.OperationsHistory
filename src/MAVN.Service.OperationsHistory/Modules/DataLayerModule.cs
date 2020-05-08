@@ -38,10 +38,6 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .As<ITransactionHistoryRepository>()
                 .SingleInstance();
 
-            builder.RegisterType<PaymentTransfersRepository>()
-                .As<IPaymentTransfersRepository>()
-                .SingleInstance();
-
             builder.RegisterType<CustomerTierRepository>()
                 .As<ICustomerTierRepository>()
                 .SingleInstance();
