@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Falcon.Numerics;
-using Lykke.Common.MsSql;
+using MAVN.Numerics;
+using MAVN.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
