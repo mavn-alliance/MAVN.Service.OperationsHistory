@@ -1,6 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Lykke.Common.MsSql;
+using MAVN.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
