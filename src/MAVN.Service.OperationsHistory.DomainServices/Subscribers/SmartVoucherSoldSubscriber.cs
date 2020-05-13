@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Common.Log;
 using Lykke.RabbitMqBroker.Subscriber;
@@ -35,7 +36,9 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
                 ShortCode = message.VoucherShortCode,
                 Timestamp = message.Timestamp,
                 CampaignId = message.CampaignId,
-                PaymentRequestId = message.PaymentRequestId,
+                PaymentRequestId = string.IsNullOrEmpty(message.PaymentRequestId)
+                    ? Guid.NewGuid().ToString()
+                    : message.PaymentRequestId,
             };
 
             await _operationsService.ProcessSmartVoucherSoldEventAsync(dto);
