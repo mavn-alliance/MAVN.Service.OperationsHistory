@@ -25,7 +25,7 @@ namespace MAVN.Service.OperationsHistory.Tests
         private readonly Mock<IBonusCashInsRepository> _bonusesRepoMock = new Mock<IBonusCashInsRepository>();
         private readonly Mock<IPartnersPaymentsRepository> _partnersPaymentsRepoMock = new Mock<IPartnersPaymentsRepository>();
         private readonly Mock<IVoucherPurchasePaymentsRepository> _vouchersPaymentsRepoMock = new Mock<IVoucherPurchasePaymentsRepository>();
-        private readonly Mock<ISmartVoucherPaymentsRepository> _smartVoucherPaymentsRepoMock = new Mock<ISmartVoucherPaymentsRepository>();
+        private readonly Mock<ISmartVoucherRepository> _smartVoucherPaymentsRepoMock = new Mock<ISmartVoucherRepository>();
         private readonly Mock<ICustomerProfileClient> _cPClientMock = new Mock<ICustomerProfileClient>();
 
         [Fact]

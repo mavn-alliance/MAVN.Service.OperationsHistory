@@ -167,7 +167,11 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                 var smartVoucherPayments = await context.SmartVoucherPayments
                     .Where(t => transactionsQuery.Any(x => x.TransactionId == t.PaymentRequestId))
                     .ToListAsync();
-                
+
+                var smartVoucherUses = await context.SmartVoucherUses
+                    .Where(t => transactionsQuery.Any(x => x.TransactionId == t.Id))
+                    .ToListAsync();
+
                 return new PaginatedCustomerOperationsModel
                 {
                     Transfers = transfers,
@@ -181,6 +185,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     FeeCollectedOperations = feeCollectedOperations,
                     VoucherPurchasePayments = voucherPurchasePayments,
                     SmartVoucherPayments = smartVoucherPayments,
+                    SmartVoucherUses = smartVoucherUses,
                 };
             }
         }

@@ -14,6 +14,7 @@
         LinkedWalletIncomingTransfer,
         FeeCollected,
         VoucherPurchasePayment,
-        SmartVoucherPayment
+        SmartVoucherPayment,
+        SmartVoucherUse,
     }
 }

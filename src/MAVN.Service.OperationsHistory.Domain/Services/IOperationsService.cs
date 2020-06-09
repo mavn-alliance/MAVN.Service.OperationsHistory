@@ -30,5 +30,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
         Task ProcessVoucherTokensUsedEventAsync(VoucherPurchasePaymentDto voucherPurchasePaymentOperation);
 
         Task ProcessSmartVoucherSoldEventAsync(SmartVoucherPaymentDto smartVoucherPayment);
+
+        Task ProcessSmartVoucherUsedEventAsync(SmartVoucherUseDto smartVoucherUse);
     }
 }
