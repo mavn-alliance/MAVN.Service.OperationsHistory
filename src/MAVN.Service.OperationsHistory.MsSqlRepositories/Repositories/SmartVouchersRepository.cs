@@ -9,16 +9,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
-    public class SmartVoucherPaymentsRepository : ISmartVoucherPaymentsRepository
+    public class SmartVouchersRepository : ISmartVoucherRepository
     {
         private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
 
-        public SmartVoucherPaymentsRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public SmartVouchersRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
 
-        public async Task AddAsync(ISmartVoucherPayment payment)
+        public async Task AddPaymentAsync(ISmartVoucherPayment payment)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
@@ -26,6 +26,20 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                 var historyEntity = TransactionHistoryEntity.CreateForSmartVoucherPayment(payment);
                 
                 context.SmartVoucherPayments.Add(entity);
+                context.TransactionHistories.Add(historyEntity);
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddUseAsync(ISmartVoucherUse smartVoucher)
+        {
+            using (var context = _contextFactory.CreateDataContext())
+            {
+                var entity = SmartVoucherUseEntity.Create(smartVoucher);
+                var historyEntity = TransactionHistoryEntity.CreateForSmartVoucherUse(smartVoucher);
+
+                context.SmartVoucherUses.Add(entity);
                 context.TransactionHistories.Add(historyEntity);
 
                 await context.SaveChangesAsync();

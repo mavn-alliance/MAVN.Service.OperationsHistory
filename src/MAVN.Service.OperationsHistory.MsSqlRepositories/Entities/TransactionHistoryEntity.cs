@@ -164,5 +164,17 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
                 Type = OperationType.SmartVoucherPayment.ToString(),
             };
         }
+
+        public static TransactionHistoryEntity CreateForSmartVoucherUse(ISmartVoucherUse operation)
+        {
+            return new TransactionHistoryEntity
+            {
+                CustomerId = operation.CustomerId.ToString(),
+                Timestamp = operation.Timestamp,
+                AssetSymbol = operation.AssetSymbol,
+                TransactionId = operation.Id,
+                Type = OperationType.SmartVoucherUse.ToString(),
+            };
+        }
     }
 }

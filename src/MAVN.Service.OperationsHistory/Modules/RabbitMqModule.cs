@@ -25,6 +25,7 @@ namespace MAVN.Service.OperationsHistory.Modules
         private const string FeeCollectedExchangeName = "lykke.wallet.feecollected";
         private const string VoucherTokensUsedExchangeName = "lykke.wallet.vouchertokensused";
         private const string SmartVoucherSoldExchangeName = "lykke.smart-vouchers.vouchersold";
+        private const string SmartVoucherUsedExchangeName = "lykke.smart-vouchers.voucherused";
 
         private readonly string _connString;
         private readonly bool _isPublicBlockchainFeatureDisabled;
@@ -106,6 +107,13 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .As<IStartStop>()
                 .WithParameter("connectionString", _connString)
                 .WithParameter("exchangeName", SmartVoucherSoldExchangeName)
+                .WithParameter("queueName", DefaultQueueName)
+                .SingleInstance();
+
+            builder.RegisterType<SmartVoucherUsedSubscriber>()
+                .As<IStartStop>()
+                .WithParameter("connectionString", _connString)
+                .WithParameter("exchangeName", SmartVoucherUsedExchangeName)
                 .WithParameter("queueName", DefaultQueueName)
                 .SingleInstance();
 

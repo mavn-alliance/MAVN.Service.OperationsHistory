@@ -4,9 +4,10 @@ using MAVN.Service.OperationsHistory.Domain.Models;
 
 namespace MAVN.Service.OperationsHistory.Domain.Repositories
 {
-    public interface ISmartVoucherPaymentsRepository
+    public interface ISmartVoucherRepository
     {
-        Task AddAsync(ISmartVoucherPayment payment);
+        Task AddPaymentAsync(ISmartVoucherPayment payment);
+        Task AddUseAsync(ISmartVoucherUse smartVoucher);
 
         Task<PaginatedSmartVoucherPaymentsHistory> GetByDatesPaginatedAsync(
             DateTime dateFrom,

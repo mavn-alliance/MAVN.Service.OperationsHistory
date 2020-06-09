@@ -31,7 +31,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IFeeCollectedOperationsRepository _feeCollectedOperationsRepository;
         private readonly ILinkWalletOperationsRepository _linkWalletOperationsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
-        private readonly ISmartVoucherPaymentsRepository _smartVoucherPaymentsRepository;
+        private readonly ISmartVoucherRepository _smartVoucherRepository;
         private readonly string _tokenSymbol;
         private readonly ILog _log;
 
@@ -49,7 +49,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IFeeCollectedOperationsRepository feeCollectedOperationsRepository,
             ILinkWalletOperationsRepository linkWalletOperationsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
-            ISmartVoucherPaymentsRepository smartVoucherPaymentsRepository,
+            ISmartVoucherRepository smartVoucherRepository,
             string tokenSymbol,
             ILogFactory logFactory)
         {
@@ -67,7 +67,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _feeCollectedOperationsRepository = feeCollectedOperationsRepository;
             _linkWalletOperationsRepository = linkWalletOperationsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
-            _smartVoucherPaymentsRepository = smartVoucherPaymentsRepository;
+            _smartVoucherRepository = smartVoucherRepository;
             _customerWalletsCache = new OnDemandDataCache<string>(memoryCache);
             _log = logFactory.CreateLog(this);
         }
@@ -245,7 +245,19 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             if (!isValid)
                 return;
 
-            await _smartVoucherPaymentsRepository.AddAsync(smartVoucherPayment);
+            await _smartVoucherRepository.AddPaymentAsync(smartVoucherPayment);
+        }
+
+        public async Task ProcessSmartVoucherUsedEventAsync(SmartVoucherUseDto smartVoucherUse)
+        {
+            smartVoucherUse.Id = Guid.NewGuid().ToString();
+
+            var isValid = ValidateSmartVoucherUseOperation(smartVoucherUse);
+
+            if (!isValid)
+                return;
+
+            await _smartVoucherRepository.AddUseAsync(smartVoucherUse);
         }
 
         private async Task AddAdditionalDataToReferralStake(ReferralStakeDto referralStake)
@@ -599,6 +611,43 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             {
                 isValid = false;
                 _log.Warning("Smart voucher payment without asset symbol", context: smartVoucherPayment);
+            }
+
+            return isValid;
+        }
+
+        private bool ValidateSmartVoucherUseOperation(SmartVoucherUseDto smartVoucherUse)
+        {
+            bool isValid = true;
+
+            if (smartVoucherUse.Amount < 0)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher use with negative fee amount", context: smartVoucherUse);
+            }
+
+            if (smartVoucherUse.CustomerId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher use without customer id", context: smartVoucherUse);
+            }
+
+            if (smartVoucherUse.CampaignId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher use without campaign id", context: smartVoucherUse);
+            }
+
+            if (smartVoucherUse.PartnerId == Guid.Empty)
+            {
+                isValid = false;
+                _log.Warning("Smart voucher use without partner id", context: smartVoucherUse);
+            }
+
+            if (string.IsNullOrEmpty(smartVoucherUse.AssetSymbol))
+            {
+                isValid = false;
+                _log.Warning("Smart voucher use without asset symbol", context: smartVoucherUse);
             }
 
             return isValid;

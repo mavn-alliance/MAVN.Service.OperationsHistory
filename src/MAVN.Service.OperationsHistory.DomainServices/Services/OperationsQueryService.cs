@@ -18,7 +18,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IPartnersPaymentsRepository _partnersPaymentsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
         private readonly ICustomerProfileClient _customerProfileClient;
-        private readonly ISmartVoucherPaymentsRepository _smartVoucherPaymentsRepository;
+        private readonly ISmartVoucherRepository _smartVoucherRepository;
         private readonly ILog _log;
 
         public OperationsQueryService(
@@ -27,7 +27,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IPartnersPaymentsRepository partnersPaymentsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
             ICustomerProfileClient customerProfileClient,
-            ISmartVoucherPaymentsRepository smartVoucherPaymentsRepository,
+            ISmartVoucherRepository smartVoucherRepository,
             ILogFactory logFactory)
         {
             _transactionHistoryRepository = transactionHistoryRepository;
@@ -35,7 +35,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _partnersPaymentsRepository = partnersPaymentsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
             _customerProfileClient = customerProfileClient;
-            _smartVoucherPaymentsRepository = smartVoucherPaymentsRepository;
+            _smartVoucherRepository = smartVoucherRepository;
             _log = logFactory.CreateLog(this);
         }
 
@@ -113,7 +113,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
 
             var (skip, take) = ValidateAndCalculateSkipAndTake(currentPage, pageSize);
 
-            return _smartVoucherPaymentsRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
+            return _smartVoucherRepository.GetByDatesPaginatedAsync(fromDate, toDate, skip, take);
         }
 
         public async Task<IEnumerable<IBonusCashIn>> GetBonusCashInsAsync(string customerId, string campaignId)

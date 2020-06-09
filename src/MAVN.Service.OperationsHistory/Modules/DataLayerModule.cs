@@ -66,8 +66,8 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .As<IVoucherPurchasePaymentsRepository>()
                 .SingleInstance();
 
-            builder.RegisterType<SmartVoucherPaymentsRepository>()
-                .As<ISmartVoucherPaymentsRepository>()
+            builder.RegisterType<SmartVouchersRepository>()
+                .As<ISmartVoucherRepository>()
                 .SingleInstance();
         }
     }
