@@ -5,6 +5,6 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
 {
     public class PaginatedSmartVoucherPaymentsHistory : BasePagedModel
     {
-        public IEnumerable<ISmartVoucherPayment> SmartVoucherPaymentsHistory { get; set; }
+        public IEnumerable<SmartVoucherPaymentDto> SmartVoucherPaymentsHistory { get; set; }
     }
 }

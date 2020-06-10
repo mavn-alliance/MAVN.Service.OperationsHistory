@@ -1,4 +1,4 @@
-using MAVN.Service.OperationsHistory.Domain.Models;
+﻿using MAVN.Service.OperationsHistory.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

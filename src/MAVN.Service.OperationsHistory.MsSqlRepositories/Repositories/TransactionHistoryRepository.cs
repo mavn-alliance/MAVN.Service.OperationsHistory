@@ -165,11 +165,62 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     .ToListAsync();
 
                 var smartVoucherPayments = await context.SmartVoucherPayments
+                    .Include(x => x.Campaign)
                     .Where(t => transactionsQuery.Any(x => x.TransactionId == t.PaymentRequestId))
+                    .Select(x => new SmartVoucherPaymentDto
+                    {
+                        PaymentRequestId = x.PaymentRequestId,
+                        Timestamp = x.Timestamp,
+                        CustomerId = x.CustomerId,
+                        PartnerName = x.PartnerName,
+                        Vertical = x.Vertical,
+                        PartnerId = x.PartnerId,
+                        CampaignId = x.CampaignId,
+                        AssetSymbol = x.AssetSymbol,
+                        CampaignName = x.Campaign.CampaignName,
+                        ShortCode = x.ShortCode,
+                        Amount = x.Amount,
+                    })
                     .ToListAsync();
 
                 var smartVoucherUses = await context.SmartVoucherUses
+                    .Include(x => x.Campaign)
                     .Where(t => transactionsQuery.Any(x => x.TransactionId == t.Id))
+                    .Select(x => new SmartVoucherUseDto
+                    {
+                        Id = x.Id,
+                        Timestamp = x.Timestamp,
+                        CustomerId = x.CustomerId,
+                        PartnerName = x.PartnerName,
+                        Vertical = x.Vertical,
+                        PartnerId = x.PartnerId,
+                        CampaignId = x.CampaignId,
+                        AssetSymbol = x.AssetSymbol,
+                        CampaignName = x.Campaign.CampaignName,
+                        Amount = x.Amount,
+                        LinkedCustomerId = x.LinkedCustomerId,
+                        LocationId = x.LocationId,
+                    })
+                    .ToListAsync();
+
+                var smartVoucherTransfers = await context.SmartVoucherTransfers
+                    .Include(x => x.Campaign)
+                    .Where(t => transactionsQuery.Any(x => x.TransactionId == t.Id))
+                    .Select(x => new SmartVoucherTransferDto
+                    {
+                        Id = x.Id,
+                        Timestamp = x.Timestamp,
+                        PartnerName = x.PartnerName,
+                        Vertical = x.Vertical,
+                        PartnerId = x.PartnerId,
+                        CampaignId = x.CampaignId,
+                        AssetSymbol = x.AssetSymbol,
+                        CampaignName = x.Campaign.CampaignName,
+                        Amount = x.Amount,
+                        NewCustomerId = x.NewCustomerId,
+                        ShortCode = x.ShortCode,
+                        OldCustomerId = x.OldCustomerId,
+                    })
                     .ToListAsync();
 
                 return new PaginatedCustomerOperationsModel
@@ -186,6 +237,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     VoucherPurchasePayments = voucherPurchasePayments,
                     SmartVoucherPayments = smartVoucherPayments,
                     SmartVoucherUses = smartVoucherUses,
+                    SmartVoucherTransfers = smartVoucherTransfers,
                 };
             }
         }

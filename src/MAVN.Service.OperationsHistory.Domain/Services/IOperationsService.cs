@@ -28,9 +28,5 @@ namespace MAVN.Service.OperationsHistory.Domain.Services
         Task ProcessWalletLinkingStateChangeCompletedEventAsync(LinkWalletOperationDto linkWalletOperation);
 
         Task ProcessVoucherTokensUsedEventAsync(VoucherPurchasePaymentDto voucherPurchasePaymentOperation);
-
-        Task ProcessSmartVoucherSoldEventAsync(SmartVoucherPaymentDto smartVoucherPayment);
-
-        Task ProcessSmartVoucherUsedEventAsync(SmartVoucherUseDto smartVoucherUse);
     }
 }

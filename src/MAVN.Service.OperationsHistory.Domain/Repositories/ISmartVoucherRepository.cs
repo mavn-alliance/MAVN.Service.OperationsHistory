@@ -6,8 +6,9 @@ namespace MAVN.Service.OperationsHistory.Domain.Repositories
 {
     public interface ISmartVoucherRepository
     {
-        Task AddPaymentAsync(ISmartVoucherPayment payment);
-        Task AddUseAsync(ISmartVoucherUse smartVoucher);
+        Task AddPaymentAsync(SmartVoucherPaymentDto payment);
+        Task AddUseAsync(SmartVoucherUseDto smartVoucher);
+        Task AddTransferAsync(SmartVoucherTransferDto smartVoucher);
 
         Task<PaginatedSmartVoucherPaymentsHistory> GetByDatesPaginatedAsync(
             DateTime dateFrom,

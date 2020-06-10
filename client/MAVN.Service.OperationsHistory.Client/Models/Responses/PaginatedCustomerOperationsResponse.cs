@@ -61,5 +61,10 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// List of smart voucher uses.
         /// </summary>
         public IEnumerable<SmartVoucherUseResponse> SmartVoucherUses { get; set; }
+
+        /// <summary>
+        /// List of smart voucher transfers.
+        /// </summary>
+        public IEnumerable<SmartVoucherTransferResponse> SmartVoucherTransfers { get; set; }
     }
 }

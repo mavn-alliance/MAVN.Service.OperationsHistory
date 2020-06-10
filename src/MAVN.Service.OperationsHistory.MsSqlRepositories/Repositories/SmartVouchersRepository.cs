@@ -18,13 +18,15 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
             _contextFactory = contextFactory;
         }
 
-        public async Task AddPaymentAsync(ISmartVoucherPayment payment)
+        public async Task AddPaymentAsync(SmartVoucherPaymentDto payment)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var entity = SmartVoucherPaymentEntity.Create(payment);
                 var historyEntity = TransactionHistoryEntity.CreateForSmartVoucherPayment(payment);
-                
+
+                entity.Campaign = await GetAndUpdateCampaign(context, payment.CampaignId, payment.CampaignName);
+
                 context.SmartVoucherPayments.Add(entity);
                 context.TransactionHistories.Add(historyEntity);
 
@@ -32,15 +34,35 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
             }
         }
 
-        public async Task AddUseAsync(ISmartVoucherUse smartVoucher)
+        public async Task AddUseAsync(SmartVoucherUseDto smartVoucher)
         {
             using (var context = _contextFactory.CreateDataContext())
             {
                 var entity = SmartVoucherUseEntity.Create(smartVoucher);
                 var historyEntity = TransactionHistoryEntity.CreateForSmartVoucherUse(smartVoucher);
 
+                entity.Campaign = await GetAndUpdateCampaign(context, smartVoucher.CampaignId, smartVoucher.CampaignName);
+
                 context.SmartVoucherUses.Add(entity);
                 context.TransactionHistories.Add(historyEntity);
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public async Task AddTransferAsync(SmartVoucherTransferDto transfer)
+        {
+            using (var context = _contextFactory.CreateDataContext())
+            {
+                var entity = SmartVoucherTransferEntity.Create(transfer);
+                var historyEntityForSender = TransactionHistoryEntity.CreateForSmartVoucherTransferSender(transfer);
+                var historyEntityForReceiver = TransactionHistoryEntity.CreateForSmartVoucherTransferReceiver(transfer);
+
+                entity.Campaign = await GetAndUpdateCampaign(context, transfer.CampaignId, transfer.CampaignName);
+
+                context.SmartVoucherTransfers.Add(entity);
+                context.TransactionHistories.Add(historyEntityForSender);
+                context.TransactionHistories.Add(historyEntityForReceiver);
 
                 await context.SaveChangesAsync();
             }
@@ -63,6 +85,20 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     .OrderBy(t => t.Timestamp)
                     .Skip(skip)
                     .Take(take)
+                    .Select(x => new SmartVoucherPaymentDto
+                    {
+                        Vertical = x.Vertical,
+                        PaymentRequestId = x.PaymentRequestId,
+                        PartnerName = x.PartnerName,
+                        Timestamp = x.Timestamp,
+                        CustomerId = x.CustomerId,
+                        AssetSymbol = x.AssetSymbol,
+                        PartnerId = x.PartnerId,
+                        CampaignId = x.CampaignId,
+                        CampaignName = x.Campaign.CampaignName,
+                        Amount = x.Amount,
+                        ShortCode = x.ShortCode,
+                    })
                     .ToArrayAsync();
 
                 return new PaginatedSmartVoucherPaymentsHistory
@@ -71,6 +107,19 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
                     TotalCount = totalCount
                 };
             }
+        }
+
+        private async Task<CampaignEntity> GetAndUpdateCampaign(OperationsHistoryContext context, string campaignId, string campaignName)
+        {
+            var campaign = await context.Campaigns.FindAsync(campaignId);
+
+            if (campaign != null && !string.IsNullOrEmpty(campaignName) && campaign.CampaignName != campaignName)
+                campaign.CampaignName = campaignName;
+
+            if (campaign == null)
+                campaign = CampaignEntity.Create(campaignId, campaignName);
+
+            return campaign;
         }
     }
 }

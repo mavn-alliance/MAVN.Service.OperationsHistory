@@ -1,3 +1,4 @@
+﻿using System;
 using System.Threading.Tasks;
 using MAVN.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Models;

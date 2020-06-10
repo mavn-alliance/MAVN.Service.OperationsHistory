@@ -4,14 +4,16 @@ using MAVN.Service.OperationsHistory.MsSqlRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
 {
     [DbContext(typeof(OperationsHistoryContext))]
-    partial class OperationsHistoryContextModelSnapshot : ModelSnapshot
+    [Migration("20200610123752_AddSmartVoucherTransfersAndAdditionalPropertiesToOtherSmartVouchers")]
+    partial class AddSmartVoucherTransfersAndAdditionalPropertiesToOtherSmartVouchers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -432,8 +434,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
 
                     b.HasKey("PaymentRequestId");
 
-                    b.HasIndex("CampaignId");
-
                     b.HasIndex("CustomerId");
 
                     b.HasIndex("Timestamp");
@@ -677,14 +677,6 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.ReleasedReferralStakeEntity", b =>
-                {
-                    b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
-                        .WithMany()
-                        .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherPaymentEntity", b =>
                 {
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()

@@ -9,6 +9,7 @@ using MAVN.Service.OperationsHistory.Settings;
 using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PrivateBlockchainFacade.Client;
 using Lykke.SettingsReader;
+using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.OperationsHistory.Modules
 {
@@ -47,6 +48,10 @@ namespace MAVN.Service.OperationsHistory.Modules
                 .WithParameter(TypedParameter.From(_appSettings.CurrentValue.Constants.TokenSymbol))
                 .SingleInstance();
 
+            builder.RegisterType<SmartVoucherOperationsService>()
+                .As<ISmartVoucherOperationsService>()
+                .SingleInstance();
+
             builder.RegisterCampaignClient(_appSettings.CurrentValue.CampaignService, null);
             
             builder.RegisterPrivateBlockchainFacadeClient(_appSettings.CurrentValue.PrivateBlockchainFacadeClient, null);
@@ -54,6 +59,8 @@ namespace MAVN.Service.OperationsHistory.Modules
             builder.RegisterCustomerProfileClient(_appSettings.CurrentValue.CustomerProfileService);
 
             builder.RegisterPartnerManagementClient(_appSettings.CurrentValue.PartnerManagementService, null);
+
+            builder.RegisterSmartVouchersClient(_appSettings.CurrentValue.SmartVouchersService, null);
         }
     }
 }

@@ -153,7 +153,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
             };
         }
 
-        public static TransactionHistoryEntity CreateForSmartVoucherPayment(ISmartVoucherPayment operation)
+        public static TransactionHistoryEntity CreateForSmartVoucherPayment(SmartVoucherPaymentDto operation)
         {
             return new TransactionHistoryEntity
             {
@@ -165,7 +165,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
             };
         }
 
-        public static TransactionHistoryEntity CreateForSmartVoucherUse(ISmartVoucherUse operation)
+        public static TransactionHistoryEntity CreateForSmartVoucherUse(SmartVoucherUseDto operation)
         {
             return new TransactionHistoryEntity
             {
@@ -174,6 +174,31 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
                 AssetSymbol = operation.AssetSymbol,
                 TransactionId = operation.Id,
                 Type = OperationType.SmartVoucherUse.ToString(),
+            };
+        }
+
+
+        public static TransactionHistoryEntity CreateForSmartVoucherTransferSender(SmartVoucherTransferDto operation)
+        {
+            return new TransactionHistoryEntity
+            {
+                CustomerId = operation.OldCustomerId.ToString(),
+                Timestamp = operation.Timestamp,
+                AssetSymbol = operation.AssetSymbol,
+                TransactionId = operation.Id,
+                Type = OperationType.SmartVoucherTransfer.ToString(),
+            };
+        }
+
+        public static TransactionHistoryEntity CreateForSmartVoucherTransferReceiver(SmartVoucherTransferDto operation)
+        {
+            return new TransactionHistoryEntity
+            {
+                CustomerId = operation.NewCustomerId.ToString(),
+                Timestamp = operation.Timestamp,
+                AssetSymbol = operation.AssetSymbol,
+                TransactionId = operation.Id,
+                Type = OperationType.SmartVoucherTransfer.ToString(),
             };
         }
     }

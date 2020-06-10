@@ -17,6 +17,7 @@
     <PackageReference Include="MAVN.Service.PaymentManagement.Contract" Version="1.18.0" />
     <PackageReference Include="MAVN.Service.PrivateBlockchainFacade.Client" Version="1.1.0" />
     <PackageReference Include="MAVN.Service.PrivateBlockchainFacade.Contract" Version="1.1.0" />
+    <PackageReference Include="MAVN.Service.SmartVouchers.Client" Version="2.12.1" />
     <PackageReference Include="MAVN.Service.SmartVouchers.Contract" Version="2.12.0" />
     <PackageReference Include="MAVN.Service.Staking.Contract" Version="1.1.1" />
     <PackageReference Include="MAVN.Service.Tiers.Contract" Version="1.1.1" />

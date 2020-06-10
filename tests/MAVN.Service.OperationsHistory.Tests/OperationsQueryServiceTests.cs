@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Lykke.Logs;
@@ -14,9 +15,9 @@ namespace MAVN.Service.OperationsHistory.Tests
 {
     public class OperationsQueryServiceTests
     {
-        private const string FakeSenderCustomerId = "senderId";
-        private const string FakeReceiverCustomerId = "receiverId";
-        private const string FakeReceiver2CustomerId = "receiver2Id";
+        private const string FakeSenderCustomerId = "0d22dded-89ca-412a-8cdc-bc1dc2e4ecc1";
+        private const string FakeReceiverCustomerId = "f7e73d55-ef70-4665-8ddb-d910340758c4";
+        private const string FakeReceiver2CustomerId = "8924b275-f634-4ae4-b0a2-d9cbba38e2f4";
         private const string FakeSenderCustomerEmail = "senderEmail";
         private const string FakeReceiverCustomerEmail = "receiverEmail";
         private const string FakeReceiver2CustomerEmail = "receiver2Email";
@@ -46,6 +47,19 @@ namespace MAVN.Service.OperationsHistory.Tests
                         {
                             SenderCustomerId = FakeSenderCustomerId,
                             ReceiverCustomerId = FakeReceiver2CustomerId
+                        }
+                    },
+                    SmartVoucherTransfers = new List<SmartVoucherTransferDto>
+                    {
+                        new SmartVoucherTransferDto
+                        {
+                            OldCustomerId = Guid.Parse(FakeSenderCustomerId),
+                            NewCustomerId = Guid.Parse(FakeReceiverCustomerId)
+                        },
+                        new SmartVoucherTransferDto
+                        {
+                            OldCustomerId = Guid.Parse(FakeSenderCustomerId),
+                            NewCustomerId = Guid.Parse(FakeReceiver2CustomerId)
                         }
                     }
                 });

@@ -27,6 +27,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
         internal DbSet<VoucherPurchasePaymentEntity> VoucherPurchasePayments { get; set; }
         internal DbSet<SmartVoucherPaymentEntity> SmartVoucherPayments { get; set; }
         internal DbSet<SmartVoucherUseEntity> SmartVoucherUses { get; set; }
+        internal DbSet<SmartVoucherTransferEntity> SmartVoucherTransfers { get; set; }
 
         public OperationsHistoryContext() : base(Schema)
         {
@@ -109,6 +110,12 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
 
             smartVoucherUseBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
             smartVoucherUseBuilder.HasIndex(t => t.CustomerId).IsUnique(false);
+
+            var smartVoucherTransfersBuilder = modelBuilder.Entity<SmartVoucherTransferEntity>();
+
+            smartVoucherTransfersBuilder.HasIndex(t => t.Timestamp).IsUnique(false);
+            smartVoucherTransfersBuilder.HasIndex(t => t.OldCustomerId).IsUnique(false);
+            smartVoucherTransfersBuilder.HasIndex(t => t.NewCustomerId).IsUnique(false);
         }
     }
 }

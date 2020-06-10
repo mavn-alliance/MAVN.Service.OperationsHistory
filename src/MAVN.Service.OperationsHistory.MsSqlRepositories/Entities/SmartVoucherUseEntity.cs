@@ -6,7 +6,7 @@ using MAVN.Service.OperationsHistory.Domain.Models;
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
 {
     [Table("smart_voucher_uses")]
-    public class SmartVoucherUseEntity : ISmartVoucherUse
+    public class SmartVoucherUseEntity
     {
         [Key]
         [Column("id")]
@@ -23,12 +23,20 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
         [Column("partner_id")]
         public Guid PartnerId { get; set; }
 
+        [Column("partner_name")]
+        public string PartnerName { get; set; }
+
+        [Column("vertical")]
+        public string Vertical { get; set; }
+
         [Column("location_id")]
         public Guid? LocationId { get; set; }
 
         [Required]
         [Column("campaign_id")]
-        public Guid CampaignId { get; set; }
+        public string CampaignId { get; set; }
+
+        public CampaignEntity Campaign { get; set; }
 
         [Required]
         [Column("amount")]
@@ -42,7 +50,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
         [Column("timestamp")]
         public DateTime Timestamp { get; set; }
 
-        public static SmartVoucherUseEntity Create(ISmartVoucherUse smartVoucherUse)
+        public static SmartVoucherUseEntity Create(SmartVoucherUseDto smartVoucherUse)
         {
             return new SmartVoucherUseEntity
             {
@@ -55,6 +63,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
                 LinkedCustomerId = smartVoucherUse.LinkedCustomerId,
                 Id = smartVoucherUse.Id,
                 LocationId = smartVoucherUse.LocationId,
+                Vertical = smartVoucherUse.Vertical,
+                PartnerName = smartVoucherUse.PartnerName,
             };
         }
     }
