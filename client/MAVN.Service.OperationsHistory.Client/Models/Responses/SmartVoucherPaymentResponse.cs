@@ -24,7 +24,7 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// <summary>
         /// The id of the customer
         /// </summary>
-        public Guid CustomerId { get; set; }
+        public string CustomerId { get; set; }
         /// <summary>
         /// The id of the partner
         /// </summary>
@@ -41,5 +41,17 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// Timestamp of the payment
         /// </summary>
         public DateTime Timestamp { get; set; }
+        /// <summary>
+        /// Name of the campaign
+        /// </summary>
+        public string CampaignName { get; set; }
+        /// <summary>
+        /// Name of the partner
+        /// </summary>
+        public string PartnerName { get; set; }
+        /// <summary>
+        /// Vertical of the partner
+        /// </summary>
+        public string Vertical { get; set; }
     }
 }

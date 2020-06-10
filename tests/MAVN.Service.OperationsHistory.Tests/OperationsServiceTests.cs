@@ -53,7 +53,6 @@ namespace MAVN.Service.OperationsHistory.Tests
         private readonly Mock<IFeeCollectedOperationsRepository> _feeCollectedOperationsRepo = new Mock<IFeeCollectedOperationsRepository>();
         private readonly Mock<ILinkWalletOperationsRepository> _linkWalletOperationsRepoMock = new Mock<ILinkWalletOperationsRepository>();
         private readonly Mock<IVoucherPurchasePaymentsRepository> _voucherPurchasePaymentsRepoMock = new Mock<IVoucherPurchasePaymentsRepository>();
-        private readonly Mock<ISmartVoucherRepository> _smartVoucherPaymentsRepoMock = new Mock<ISmartVoucherRepository>();
 
         #endregion
 
@@ -233,7 +232,7 @@ namespace MAVN.Service.OperationsHistory.Tests
                 Amount = amount,
                 CustomerId = "customerId",
                 BonusType = "type",
-                CampaignId = FakeCampaignId
+                CampaignId = FakeCampaignId,
             };
 
             var operationsService = CreateSutInstance();
@@ -266,7 +265,7 @@ namespace MAVN.Service.OperationsHistory.Tests
                 Amount = 100,
                 CustomerId = customerId,
                 BonusType = type,
-                CampaignId = campaignId
+                CampaignId = campaignId,
             };
 
             var operationsService = CreateSutInstance();
@@ -350,7 +349,6 @@ namespace MAVN.Service.OperationsHistory.Tests
                 _feeCollectedOperationsRepo.Object,
                 _linkWalletOperationsRepoMock.Object,
                 _voucherPurchasePaymentsRepoMock.Object,
-                _smartVoucherPaymentsRepoMock.Object,
                 TokenSymbol,
                 EmptyLogFactory.Instance);
         }

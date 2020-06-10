@@ -9,12 +9,12 @@ using MAVN.Service.SmartVouchers.Contract;
 
 namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
 {
-    public class SmartVoucherUsedSubscriber : JsonRabbitSubscriber<SmartVoucherUsedEvent>
+    public class SmartVoucherTransferredSubscriber : JsonRabbitSubscriber<SmartVoucherTransferredEvent>
     {
         private readonly ISmartVoucherOperationsService _operationsService;
         private readonly ILog _log;
 
-        public SmartVoucherUsedSubscriber(
+        public SmartVoucherTransferredSubscriber(
             string connectionString,
             string exchangeName,
             string queueName,
@@ -25,22 +25,22 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
             _log = logFactory.CreateLog(this);
         }
 
-        protected override async Task ProcessMessageAsync(SmartVoucherUsedEvent message)
+        protected override async Task ProcessMessageAsync(SmartVoucherTransferredEvent message)
         {
-            var dto = new SmartVoucherUseDto
+            var dto = new SmartVoucherTransferDto
             {
                 Amount = message.Amount,
                 AssetSymbol = message.Currency,
-                CustomerId = message.CustomerId,
                 PartnerId = message.PartnerId,
+                ShortCode = message.VoucherShortCode,
                 Timestamp = message.Timestamp,
                 CampaignId = message.CampaignId.ToString(),
-                LinkedCustomerId = message.LinkedCustomerId,
-                LocationId = message.LocationId,
+                NewCustomerId = message.NewCustomerId,
+                OldCustomerId = message.OldCustomerId,
             };
 
-            await _operationsService.ProcessSmartVoucherUsedEventAsync(dto);
-            _log.Info("Processed SmartVoucherUsedEvent", context: message);
+            await _operationsService.ProcessSmartVoucherTransferredEventAsync(dto);
+            _log.Info("Processed SmartVoucherTransferredEvent", context: message);
         }
     }
 }

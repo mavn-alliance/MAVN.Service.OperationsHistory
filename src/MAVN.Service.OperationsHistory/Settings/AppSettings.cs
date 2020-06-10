@@ -4,6 +4,7 @@ using MAVN.Service.Campaign.Client;
 using MAVN.Service.CustomerProfile.Client;
 using MAVN.Service.PartnerManagement.Client;
 using MAVN.Service.PrivateBlockchainFacade.Client;
+using MAVN.Service.SmartVouchers.Client;
 
 namespace MAVN.Service.OperationsHistory.Settings
 {
@@ -19,6 +20,8 @@ namespace MAVN.Service.OperationsHistory.Settings
         public CustomerProfileServiceClientSettings CustomerProfileService { get; set; }
 
         public PartnerManagementServiceClientSettings PartnerManagementService { get; set; }
+
+        public SmartVouchersServiceClientSettings SmartVouchersService { get; set; }
 
         public Constants Constants { get; set; }
     }

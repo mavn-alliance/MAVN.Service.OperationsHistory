@@ -22,8 +22,9 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
 
         public IEnumerable<VoucherPurchasePaymentDto> VoucherPurchasePayments { get; set; }
 
-        public IEnumerable<ISmartVoucherPayment> SmartVoucherPayments { get; set; }
+        public IEnumerable<SmartVoucherPaymentDto> SmartVoucherPayments { get; set; }
 
-        public IEnumerable<ISmartVoucherUse> SmartVoucherUses { get; set; }
+        public IEnumerable<SmartVoucherUseDto> SmartVoucherUses { get; set; }
+        public IEnumerable<SmartVoucherTransferDto> SmartVoucherTransfers { get; set; }
     }
 }

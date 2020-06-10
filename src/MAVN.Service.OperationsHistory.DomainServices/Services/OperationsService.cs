@@ -31,7 +31,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
         private readonly IFeeCollectedOperationsRepository _feeCollectedOperationsRepository;
         private readonly ILinkWalletOperationsRepository _linkWalletOperationsRepository;
         private readonly IVoucherPurchasePaymentsRepository _voucherPurchasePaymentsRepository;
-        private readonly ISmartVoucherRepository _smartVoucherRepository;
         private readonly string _tokenSymbol;
         private readonly ILog _log;
 
@@ -49,7 +48,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             IFeeCollectedOperationsRepository feeCollectedOperationsRepository,
             ILinkWalletOperationsRepository linkWalletOperationsRepository,
             IVoucherPurchasePaymentsRepository voucherPurchasePaymentsRepository,
-            ISmartVoucherRepository smartVoucherRepository,
             string tokenSymbol,
             ILogFactory logFactory)
         {
@@ -67,7 +65,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             _feeCollectedOperationsRepository = feeCollectedOperationsRepository;
             _linkWalletOperationsRepository = linkWalletOperationsRepository;
             _voucherPurchasePaymentsRepository = voucherPurchasePaymentsRepository;
-            _smartVoucherRepository = smartVoucherRepository;
             _customerWalletsCache = new OnDemandDataCache<string>(memoryCache);
             _log = logFactory.CreateLog(this);
         }
@@ -238,28 +235,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             return _voucherPurchasePaymentsRepository.InsertAsync(voucherPurchasePaymentOperation);
         }
 
-        public async Task ProcessSmartVoucherSoldEventAsync(SmartVoucherPaymentDto smartVoucherPayment)
-        {
-            var isValid = ValidateSmartVoucherPaymentOperation(smartVoucherPayment);
-
-            if (!isValid)
-                return;
-
-            await _smartVoucherRepository.AddPaymentAsync(smartVoucherPayment);
-        }
-
-        public async Task ProcessSmartVoucherUsedEventAsync(SmartVoucherUseDto smartVoucherUse)
-        {
-            smartVoucherUse.Id = Guid.NewGuid().ToString();
-
-            var isValid = ValidateSmartVoucherUseOperation(smartVoucherUse);
-
-            if (!isValid)
-                return;
-
-            await _smartVoucherRepository.AddUseAsync(smartVoucherUse);
-        }
-
         private async Task AddAdditionalDataToReferralStake(ReferralStakeDto referralStake)
         {
             referralStake.AssetSymbol = _tokenSymbol;
@@ -372,6 +347,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             }
 
             if (string.IsNullOrEmpty(bonus.CampaignId))
+
             {
                 isValid = false;
                 _log.Warning("Bonus event without campaign id", context: bonus);
@@ -566,93 +542,6 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
 
             return isValid;
         }
-
-        private bool ValidateSmartVoucherPaymentOperation(SmartVoucherPaymentDto smartVoucherPayment)
-        {
-            bool isValid = true;
-
-            if (smartVoucherPayment.Amount < 0)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment with negative fee amount", context: smartVoucherPayment);
-            }
-
-            if (smartVoucherPayment.CustomerId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without customer id", context: smartVoucherPayment);
-            }
-
-            if (smartVoucherPayment.CampaignId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without campaign id", context: smartVoucherPayment);
-            }
-
-            if (string.IsNullOrEmpty(smartVoucherPayment.ShortCode))
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without short code", context: smartVoucherPayment);
-            }
-
-            if (string.IsNullOrEmpty(smartVoucherPayment.PaymentRequestId))
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without payment request id", context: smartVoucherPayment);
-            }
-
-            if (smartVoucherPayment.PartnerId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without partner id", context: smartVoucherPayment);
-            }
-
-            if (string.IsNullOrEmpty(smartVoucherPayment.AssetSymbol))
-            {
-                isValid = false;
-                _log.Warning("Smart voucher payment without asset symbol", context: smartVoucherPayment);
-            }
-
-            return isValid;
-        }
-
-        private bool ValidateSmartVoucherUseOperation(SmartVoucherUseDto smartVoucherUse)
-        {
-            bool isValid = true;
-
-            if (smartVoucherUse.Amount < 0)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher use with negative fee amount", context: smartVoucherUse);
-            }
-
-            if (smartVoucherUse.CustomerId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher use without customer id", context: smartVoucherUse);
-            }
-
-            if (smartVoucherUse.CampaignId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher use without campaign id", context: smartVoucherUse);
-            }
-
-            if (smartVoucherUse.PartnerId == Guid.Empty)
-            {
-                isValid = false;
-                _log.Warning("Smart voucher use without partner id", context: smartVoucherUse);
-            }
-
-            if (string.IsNullOrEmpty(smartVoucherUse.AssetSymbol))
-            {
-                isValid = false;
-                _log.Warning("Smart voucher use without asset symbol", context: smartVoucherUse);
-            }
-
-            return isValid;
-        }
-
         #endregion
 
         private async Task<string> GetCustomerWalletAddressAsync(string customerId)

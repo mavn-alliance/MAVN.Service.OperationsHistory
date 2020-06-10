@@ -16,5 +16,6 @@
         VoucherPurchasePayment,
         SmartVoucherPayment,
         SmartVoucherUse,
+        SmartVoucherTransfer,
     }
 }

@@ -29,6 +29,9 @@ PartnerManagementService:
 CustomerProfileService:
     ServiceUrl :
         settings-key: CustomerProfileServiceUrl
+SmartVouchersService:
+    ServiceUrl :
+        settings-key: SmartVouchersServiceUrl
 SlackNotifications:
     AzureQueue:
         ConnectionString:

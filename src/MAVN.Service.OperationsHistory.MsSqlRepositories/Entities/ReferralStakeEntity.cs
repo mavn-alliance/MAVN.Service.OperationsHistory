@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using MAVN.Numerics;
@@ -16,6 +16,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
 
         [Column("campaign_id")]
         [Required]
+        [ForeignKey("Campaign")]
         public string CampaignId { get; set; }
 
         public CampaignEntity Campaign { get; set; }
@@ -40,7 +41,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Entities
         {
             return new ReferralStakeEntity
             {
-                CampaignId = referralStake.CampaignId,
+                CampaignId = referralStake.CampaignId.ToString(),
                 CustomerId = referralStake.CustomerId,
                 Timestamp = referralStake.Timestamp,
                 ReferralId = referralStake.ReferralId,

@@ -11,14 +11,14 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
 {
     public class SmartVoucherSoldSubscriber : JsonRabbitSubscriber<SmartVoucherSoldEvent>
     {
-        private readonly IOperationsService _operationsService;
+        private readonly ISmartVoucherOperationsService _operationsService;
         private readonly ILog _log;
 
         public SmartVoucherSoldSubscriber(
             string connectionString,
             string exchangeName,
             string queueName,
-            IOperationsService operationsService,
+            ISmartVoucherOperationsService operationsService,
             ILogFactory logFactory) : base(connectionString, exchangeName, queueName, logFactory)
         {
             _operationsService = operationsService;
@@ -35,7 +35,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Subscribers
                 PartnerId = message.PartnerId,
                 ShortCode = message.VoucherShortCode,
                 Timestamp = message.Timestamp,
-                CampaignId = message.CampaignId,
+                CampaignId = message.CampaignId.ToString(),
                 PaymentRequestId = string.IsNullOrEmpty(message.PaymentRequestId)
                     ? Guid.NewGuid().ToString()
                     : message.PaymentRequestId,

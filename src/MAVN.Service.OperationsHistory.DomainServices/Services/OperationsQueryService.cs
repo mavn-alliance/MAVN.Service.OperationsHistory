@@ -46,6 +46,7 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             var result = await _transactionHistoryRepository.GetByCustomerIdPaginatedAsync(customerId, skip, take);
 
             await SetCustomersEmails(result.Transfers);
+            await SetCustomersEmails(result.SmartVoucherTransfers);
 
             return result;
         }
@@ -156,6 +157,39 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
 
                 transfer.SenderCustomerEmail = senderEmail;
                 transfer.ReceiverCustomerEmail = receiverEmail;
+            }
+        }
+
+        private async Task SetCustomersEmails(IEnumerable<SmartVoucherTransferDto> transfers)
+        {
+            var customerIds = new HashSet<string>();
+
+            foreach (var transfer in transfers)
+            {
+                customerIds.Add(transfer.OldCustomerId.ToString());
+                customerIds.Add(transfer.NewCustomerId.ToString());
+            }
+
+            var customerProfiles = await _customerProfileClient.CustomerProfiles.GetByIdsAsync(
+                customerIds.ToArray(),
+                includeNotVerified: true,
+                includeNotActive: true);
+
+            var customerEmails = customerProfiles.ToDictionary(x => x.CustomerId, x => x.Email);
+
+            foreach (var transfer in transfers)
+            {
+                var senderCustomerExists = customerEmails.TryGetValue(transfer.OldCustomerId.ToString(), out var senderEmail);
+                var receiverCustomerExists = customerEmails.TryGetValue(transfer.NewCustomerId.ToString(), out var receiverEmail);
+
+                if (!senderCustomerExists)
+                    _log.Error(message: "Sender customer does not exist for already processed Smart Voucher Transfer", context: transfer.OldCustomerId);
+
+                if (!receiverCustomerExists)
+                    _log.Error(message: "Receiver customer does not exist for already processed Smart VoucherTransfer", context: transfer.NewCustomerId);
+
+                transfer.OldCustomerEmail = senderEmail;
+                transfer.NewCustomerEmail = receiverEmail;
             }
         }
 
