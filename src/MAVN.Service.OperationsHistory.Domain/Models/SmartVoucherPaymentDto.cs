@@ -9,8 +9,7 @@ namespace MAVN.Service.OperationsHistory.Domain.Models
         public Guid CustomerId { get; set; }
         public Guid PartnerId { get; set; }
         public string CampaignId { get; set; }
-        public string
-            CampaignName { get; set; }
+        public string CampaignName { get; set; }
         public string PartnerName { get; set; }
         public string Vertical { get; set; }
         public decimal Amount { get; set; }

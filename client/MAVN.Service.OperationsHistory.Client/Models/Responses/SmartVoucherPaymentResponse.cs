@@ -20,11 +20,11 @@ namespace MAVN.Service.OperationsHistory.Client.Models.Responses
         /// <summary>
         /// The id of the campaign
         /// </summary>
-        public Guid CampaignId { get; set; }
+        public string CampaignId { get; set; }
         /// <summary>
         /// The id of the customer
         /// </summary>
-        public string CustomerId { get; set; }
+        public Guid CustomerId { get; set; }
         /// <summary>
         /// The id of the partner
         /// </summary>
