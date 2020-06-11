@@ -36,6 +36,14 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
             if (!isValid)
                 return;
 
+            var (partnerName, vertical, campaignName) = await GetAdditionalDataForSmartVoucher(
+                smartVoucherPayment.CampaignId,
+                smartVoucherPayment.PartnerId);
+
+            smartVoucherPayment.PartnerName = partnerName;
+            smartVoucherPayment.Vertical = vertical;
+            smartVoucherPayment.CampaignName = campaignName;
+
             await _smartVoucherRepository.AddPaymentAsync(smartVoucherPayment);
         }
 
@@ -47,6 +55,14 @@ namespace MAVN.Service.OperationsHistory.DomainServices.Services
 
             if (!isValid)
                 return;
+
+            var (partnerName, vertical, campaignName) = await GetAdditionalDataForSmartVoucher(
+                smartVoucherUse.CampaignId,
+                smartVoucherUse.PartnerId);
+
+            smartVoucherUse.PartnerName = partnerName;
+            smartVoucherUse.Vertical = vertical;
+            smartVoucherUse.CampaignName = campaignName;
 
             await _smartVoucherRepository.AddUseAsync(smartVoucherUse);
         }
