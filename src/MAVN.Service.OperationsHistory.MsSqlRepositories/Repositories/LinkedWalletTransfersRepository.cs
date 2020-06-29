@@ -1,5 +1,5 @@
-using System.Threading.Tasks;
-using MAVN.Common.MsSql;
+﻿using System.Threading.Tasks;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
@@ -8,9 +8,9 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
     public class LinkedWalletTransfersRepository : ILinkedWalletTransfersRepository
     {
-        private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<OperationsHistoryContext> _contextFactory;
 
-        public LinkedWalletTransfersRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public LinkedWalletTransfersRepository(PostgreSQLContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

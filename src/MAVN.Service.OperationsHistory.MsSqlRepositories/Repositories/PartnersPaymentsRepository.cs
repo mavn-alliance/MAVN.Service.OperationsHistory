@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using MAVN.Numerics;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
@@ -12,9 +12,9 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
     public class PartnersPaymentsRepository : IPartnersPaymentsRepository
     {
-        private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<OperationsHistoryContext> _contextFactory;
 
-        public PartnersPaymentsRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public PartnersPaymentsRepository(PostgreSQLContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

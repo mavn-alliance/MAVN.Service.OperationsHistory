@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
@@ -9,9 +9,9 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
     public class ReferralStakesRepository : IReferralStakesRepository
     {
-        private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<OperationsHistoryContext> _contextFactory;
 
-        public ReferralStakesRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public ReferralStakesRepository(PostgreSQLContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

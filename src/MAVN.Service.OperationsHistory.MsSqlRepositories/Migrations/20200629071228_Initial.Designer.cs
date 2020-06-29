@@ -3,74 +3,87 @@ using System;
 using MAVN.Service.OperationsHistory.MsSqlRepositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
 {
     [DbContext(typeof(OperationsHistoryContext))]
-    [Migration("20200610123938_AddFKToCampaignsFromSVPayments")]
-    partial class AddFKToCampaignsFromSVPayments
+    [Migration("20200629071228_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("operation_history")
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                .HasAnnotation("ProductVersion", "3.1.5")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BonusCashInEntity", b =>
                 {
                     b.Property<string>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("transaction_id");
+                        .HasColumnName("transaction_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("BonusType")
                         .IsRequired()
-                        .HasColumnName("bonus_type");
+                        .HasColumnName("bonus_type")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ConditionId")
-                        .HasColumnName("condition_id");
+                        .HasColumnName("condition_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ConditionName")
-                        .HasColumnName("condition_name");
+                        .HasColumnName("condition_name")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ExternalOperationId")
-                        .HasColumnName("external_operation_id");
+                        .HasColumnName("external_operation_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("LocationCode")
-                        .HasColumnName("location_code");
+                        .HasColumnName("location_code")
+                        .HasColumnType("text");
 
                     b.Property<string>("LocationId")
-                        .HasColumnName("location_id");
+                        .HasColumnName("location_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ReferralId")
-                        .HasColumnName("referral_id");
+                        .HasColumnName("referral_id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("TransactionId");
 
@@ -86,12 +99,13 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.BurnRuleEntity", b =>
                 {
                     b.Property<string>("BurnRuleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("burn_rule_id");
+                        .HasColumnName("burn_rule_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("BurnRuleName")
                         .IsRequired()
-                        .HasColumnName("burn_rule_name");
+                        .HasColumnName("burn_rule_name")
+                        .HasColumnType("text");
 
                     b.HasKey("BurnRuleId");
 
@@ -101,10 +115,11 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", b =>
                 {
                     b.Property<string>("CampaignId")
-                        .ValueGeneratedOnAdd();
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("CampaignId");
 
@@ -114,8 +129,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CustomerTierEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
@@ -128,7 +143,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -138,26 +154,31 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.FeeCollectedOperationEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Fee")
                         .IsRequired()
-                        .HasColumnName("fee");
+                        .HasColumnName("fee")
+                        .HasColumnType("text");
 
                     b.Property<int>("Reason")
-                        .HasColumnName("reason");
+                        .HasColumnName("reason")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -171,30 +192,36 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.LinkWalletOperationEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Direction")
                         .IsRequired()
-                        .HasColumnName("direction");
+                        .HasColumnName("direction")
+                        .HasColumnType("text");
 
                     b.Property<string>("Fee")
                         .IsRequired()
-                        .HasColumnName("fee");
+                        .HasColumnName("fee")
+                        .HasColumnType("text");
 
                     b.Property<string>("PrivateAddress")
                         .IsRequired()
-                        .HasColumnName("private_address");
+                        .HasColumnName("private_address")
+                        .HasColumnType("text");
 
                     b.Property<string>("PublicAddress")
-                        .HasColumnName("public_address");
+                        .HasColumnName("public_address")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -208,34 +235,41 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.LinkedWalletTransferEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<int>("Direction")
-                        .HasColumnName("direction");
+                        .HasColumnName("direction")
+                        .HasColumnType("integer");
 
                     b.Property<string>("PrivateAddress")
                         .IsRequired()
-                        .HasColumnName("private_address");
+                        .HasColumnName("private_address")
+                        .HasColumnType("text");
 
                     b.Property<string>("PublicAddress")
                         .IsRequired()
-                        .HasColumnName("public_address");
+                        .HasColumnName("public_address")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -245,34 +279,41 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentEntity", b =>
                 {
                     b.Property<string>("PaymentRequestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("payment_request_id");
+                        .HasColumnName("payment_request_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("LocationId")
-                        .HasColumnName("location_id");
+                        .HasColumnName("location_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("PartnerId")
                         .IsRequired()
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("PartnerName")
                         .IsRequired()
-                        .HasColumnName("partner_name");
+                        .HasColumnName("partner_name")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("PaymentRequestId");
 
@@ -286,34 +327,41 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.PartnersPaymentRefundEntity", b =>
                 {
                     b.Property<string>("PaymentRequestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("payment_request_id");
+                        .HasColumnName("payment_request_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("LocationId")
-                        .HasColumnName("location_id");
+                        .HasColumnName("location_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("PartnerId")
                         .IsRequired()
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("PartnerName")
                         .IsRequired()
-                        .HasColumnName("partner_name");
+                        .HasColumnName("partner_name")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("PaymentRequestId");
 
@@ -327,27 +375,32 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.ReferralStakeEntity", b =>
                 {
                     b.Property<string>("ReferralId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("referral_id");
+                        .HasColumnName("referral_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ReferralId");
 
@@ -363,27 +416,32 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.ReleasedReferralStakeEntity", b =>
                 {
                     b.Property<string>("ReferralId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("referral_id");
+                        .HasColumnName("referral_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ReferralId");
 
@@ -399,38 +457,47 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherPaymentEntity", b =>
                 {
                     b.Property<string>("PaymentRequestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("payment_request_id");
+                        .HasColumnName("payment_request_id")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PartnerName")
-                        .HasColumnName("partner_name");
+                        .HasColumnName("partner_name")
+                        .HasColumnType("text");
 
                     b.Property<string>("ShortCode")
                         .IsRequired()
-                        .HasColumnName("short_code");
+                        .HasColumnName("short_code")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Vertical")
-                        .HasColumnName("vertical");
+                        .HasColumnName("vertical")
+                        .HasColumnType("text");
 
                     b.HasKey("PaymentRequestId");
 
@@ -446,41 +513,51 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherTransferEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("NewCustomerId")
-                        .HasColumnName("new_customer_id");
+                        .HasColumnName("new_customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("OldCustomerId")
-                        .HasColumnName("old_customer_id");
+                        .HasColumnName("old_customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PartnerName")
-                        .HasColumnName("partner_name");
+                        .HasColumnName("partner_name")
+                        .HasColumnType("text");
 
                     b.Property<string>("ShortCode")
                         .IsRequired()
-                        .HasColumnName("short_code");
+                        .HasColumnName("short_code")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Vertical")
-                        .HasColumnName("vertical");
+                        .HasColumnName("vertical")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -498,40 +575,50 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherUseEntity", b =>
                 {
                     b.Property<string>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id");
+                        .HasColumnName("id")
+                        .HasColumnType("text");
 
                     b.Property<decimal>("Amount")
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("numeric");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset_symbol");
+                        .HasColumnName("asset_symbol")
+                        .HasColumnType("text");
 
                     b.Property<string>("CampaignId")
                         .IsRequired()
-                        .HasColumnName("campaign_id");
+                        .HasColumnName("campaign_id")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("LinkedCustomerId")
-                        .HasColumnName("linked_customer_id");
+                        .HasColumnName("linked_customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("LocationId")
-                        .HasColumnName("location_id");
+                        .HasColumnName("location_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PartnerId")
-                        .HasColumnName("partner_id");
+                        .HasColumnName("partner_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PartnerName")
-                        .HasColumnName("partner_name");
+                        .HasColumnName("partner_name")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Vertical")
-                        .HasColumnName("vertical");
+                        .HasColumnName("vertical")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -549,26 +636,32 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("TransactionId")
                         .IsRequired()
-                        .HasColumnName("transaction_id");
+                        .HasColumnName("transaction_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnName("type");
+                        .HasColumnName("type")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -584,38 +677,46 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.TransferEntity", b =>
                 {
                     b.Property<string>("TransactionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("transaction_id");
+                        .HasColumnName("transaction_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
-                        .HasColumnName("asset");
+                        .HasColumnName("asset")
+                        .HasColumnType("text");
 
                     b.Property<string>("ExternalOperationId")
-                        .HasColumnName("external_operation_id");
+                        .HasColumnName("external_operation_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ReceiverCustomerId")
                         .IsRequired()
-                        .HasColumnName("receiver_id");
+                        .HasColumnName("receiver_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("ReceiverWalletAddress")
                         .IsRequired()
-                        .HasColumnName("receiver_wallet_address");
+                        .HasColumnName("receiver_wallet_address")
+                        .HasColumnType("text");
 
                     b.Property<string>("SenderCustomerId")
                         .IsRequired()
-                        .HasColumnName("sender_id");
+                        .HasColumnName("sender_id")
+                        .HasColumnType("text");
 
                     b.Property<string>("SenderWalletAddress")
                         .IsRequired()
-                        .HasColumnName("sender_wallet_address");
+                        .HasColumnName("sender_wallet_address")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("TransactionId");
 
@@ -630,11 +731,13 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                 {
                     b.Property<Guid>("TransferId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnName("transfer_id");
+                        .HasColumnName("transfer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Amount")
                         .IsRequired()
-                        .HasColumnName("amount");
+                        .HasColumnName("amount")
+                        .HasColumnType("text");
 
                     b.Property<string>("AssetSymbol")
                         .IsRequired()
@@ -642,16 +745,20 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                         .HasColumnType("varchar(10)");
 
                     b.Property<Guid>("CustomerId")
-                        .HasColumnName("customer_id");
+                        .HasColumnName("customer_id")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("SpendRuleId")
-                        .HasColumnName("spend_rule_id");
+                        .HasColumnName("spend_rule_id")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnName("timestamp");
+                        .HasColumnName("timestamp")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("VoucherId")
-                        .HasColumnName("voucher_id");
+                        .HasColumnName("voucher_id")
+                        .HasColumnType("uuid");
 
                     b.HasKey("TransferId");
 
@@ -667,7 +774,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.ReferralStakeEntity", b =>
@@ -675,7 +783,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.ReleasedReferralStakeEntity", b =>
@@ -683,7 +792,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherPaymentEntity", b =>
@@ -691,7 +801,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherTransferEntity", b =>
@@ -699,7 +810,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.SmartVoucherUseEntity", b =>
@@ -707,7 +819,8 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Migrations
                     b.HasOne("MAVN.Service.OperationsHistory.MsSqlRepositories.Entities.CampaignEntity", "Campaign")
                         .WithMany()
                         .HasForeignKey("CampaignId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
