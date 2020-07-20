@@ -1,5 +1,5 @@
 ﻿using System.Data.Common;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace MAVN.Service.OperationsHistory.MsSqlRepositories
 {
-    public class OperationsHistoryContext : MsSqlContext
+    public class OperationsHistoryContext : PostgreSQLContext
     {
         private const string Schema = "operation_history";
 
@@ -43,7 +43,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories
         {
         }
 
-        protected override void OnLykkeModelCreating(ModelBuilder modelBuilder)
+        protected override void OnMAVNModelCreating(ModelBuilder modelBuilder)
         {
             var transferEntityBuilder = modelBuilder.Entity<TransferEntity>();
 

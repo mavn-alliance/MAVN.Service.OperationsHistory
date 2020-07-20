@@ -1,6 +1,6 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Entities;
@@ -10,9 +10,9 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
     public class TransfersRepository : ITransfersRepository
     {
-        private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<OperationsHistoryContext> _contextFactory;
 
-        public TransfersRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public TransfersRepository(PostgreSQLContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }

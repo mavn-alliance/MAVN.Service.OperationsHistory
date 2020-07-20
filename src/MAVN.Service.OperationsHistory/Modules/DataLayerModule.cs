@@ -1,11 +1,11 @@
 ﻿using Autofac;
 using JetBrains.Annotations;
-using MAVN.Common.MsSql;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories;
 using MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories;
 using MAVN.Service.OperationsHistory.Settings;
 using Lykke.SettingsReader;
+using MAVN.Persistence.PostgreSQL.Legacy;
 
 namespace MAVN.Service.OperationsHistory.Modules
 {
@@ -21,7 +21,7 @@ namespace MAVN.Service.OperationsHistory.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterMsSql(
+            builder.RegisterPostgreSQL(
                 _connectionString,
                 connString => new OperationsHistoryContext(connString, false),
                 dbConn => new OperationsHistoryContext(dbConn));

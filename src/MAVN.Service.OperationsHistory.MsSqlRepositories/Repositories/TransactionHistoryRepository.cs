@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MAVN.Common.MsSql;
+using MAVN.Persistence.PostgreSQL.Legacy;
 using MAVN.Service.OperationsHistory.Domain.Models;
 using MAVN.Service.OperationsHistory.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -12,7 +12,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
 {
     public class TransactionHistoryRepository : ITransactionHistoryRepository
     {
-        private readonly MsSqlContextFactory<OperationsHistoryContext> _contextFactory;
+        private readonly PostgreSQLContextFactory<OperationsHistoryContext> _contextFactory;
 
         private static readonly string[] CustomerIsActiveOperationTypes =
         {
@@ -23,7 +23,7 @@ namespace MAVN.Service.OperationsHistory.MsSqlRepositories.Repositories
             OperationType.VoucherPurchasePayment.ToString()
         };
 
-        public TransactionHistoryRepository(MsSqlContextFactory<OperationsHistoryContext> contextFactory)
+        public TransactionHistoryRepository(PostgreSQLContextFactory<OperationsHistoryContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
